@@ -144,7 +144,7 @@ else{
                                     Remember Me
                                 </label>
                             </div>
-                            <a href="send_password_reset.php" class="forgot-password">Forgot Password?</a>
+                            <a href="forgot_password.php" class="forgot-password">Forgot Password?</a>
                         </div>
                         <button type="submit" class="btn btn-login" name="login">Login</button>
                     </form>

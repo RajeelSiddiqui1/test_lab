@@ -192,6 +192,7 @@ if(!isset($_SESSION["email"]) ){
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
   <h3>About Us</h3>
   <p>
+  <a href="logout.php" class="btn btn-danger">kvhkv</a>
     SRS Electrical Appliances is a leading manufacturer of high-quality electrical products, including switch gears, fuses, capacitors, and resistors. We pride ourselves on our rigorous testing processes to ensure that every product meets the highest standards of safety and reliability before it reaches the market.
   </p>
   <ul>
