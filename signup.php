@@ -1,12 +1,6 @@
 <?php
 include("conn.php");
 
-// session_start();
-// if(isset($_SESSION["email"])){
-//     header("location:index.php");
-//     exit();
-// }
-
 if (isset($_POST["signup"])) {
     $na = $_POST["fullName"];
     $em = $_POST["email"];
@@ -18,38 +12,26 @@ if (isset($_POST["signup"])) {
 
     $hash_password = password_hash($pass, PASSWORD_DEFAULT);
 
-    $CheckQuery = "SELECT * FROM `users` WHERE `full_name`='$na' AND `email`='$em' AND `department`='$department' AND `contact_number`=$con";
-
+    $CheckQuery = "SELECT * FROM `users` WHERE `full_name`='$na' AND `email`='$em' AND `department`='$department' AND `contact_number`='$con'";
     $CheckResult = mysqli_query($conn, $CheckQuery);
     if (mysqli_num_rows($CheckResult) == 0) {
-        if($pass == $cpass){
-            $query = "INSERT INTO `users`( `full_name`, `email`, `password`, `department`, `country`, `contact_number`) 
-          VALUES ('$na','$em','$hash_password','$department','$coun','$con')";
-
-    
+        if ($pass == $cpass) {
+            $query = "INSERT INTO `users`(`full_name`, `email`, `password`, `department`, `country`, `contact_number`) 
+            VALUES ('$na','$em','$hash_password','$department','$coun','$con')";
             $result = mysqli_query($conn, $query);
-            if($result){
-                echo"<script>alert('Login Sucessfully');
+            if ($result) {
+                echo "<script>alert('Registration Successful');
                 window.location.href='login.php';
                 </script>";
+            } else {
+                echo "<script>alert('Error during registration')</script>";
             }
-
-            else{
-                echo"<script>alert('Error')</script>";
-            }
+        } else {
+            echo "<script>alert('Passwords do not match')</script>";
         }
-    
-        else{
-            echo"<script>alert('Password are not matched')</script>";
-        }
-    
+    } else {
+        echo "<script>alert('User already exists')</script>";
     }
-
-    else{
-        echo"<script>alert('Name, Email and Department are alerady exists')</script>";
-    }
-
-   
 }
 ?>
 <!doctype html>
@@ -62,16 +44,14 @@ if (isset($_POST["signup"])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: #f7f7f7;
+            background: #e9ecef;
             font-family: 'Poppins', sans-serif;
         }
 
         .card-registration {
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
-                rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
-                rgba(0, 0, 0, 0.09) 0px -3px 5px;
             border-radius: 15px;
-            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
         }
 
         .form-control:focus {
@@ -80,12 +60,21 @@ if (isset($_POST["signup"])) {
         }
 
         .btn-primary {
-            background-color: #333;
+            background-color: #007bff;
             border: none;
         }
 
         .btn-primary:hover {
-            background-color: #555;
+            background-color: #0056b3;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
         }
 
         .step {
@@ -96,13 +85,16 @@ if (isset($_POST["signup"])) {
             display: block;
         }
 
-        .error-message {
-            color: red;
-            font-size: 0.875rem;
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
 
-        label {
-            font-weight: 600;
+        @media (max-width: 576px) {
+            .col-md-6 {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -118,6 +110,7 @@ if (isset($_POST["signup"])) {
 
                             <!-- Step 1 -->
                             <div class="step active" id="step1">
+                                <div class="step-title">Step 1: Personal Information</div>
                                 <div class="mb-3">
                                     <label for="fullName" class="form-label">Full Name</label>
                                     <input type="text" id="fullName" class="form-control" name="fullName" required>
@@ -126,18 +119,18 @@ if (isset($_POST["signup"])) {
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="text" id="email" class="form-control" name="email" required>
+                                    <input type="email" id="email" class="form-control" name="email" required>
                                     <div class="error-message" id="emailError"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="department" class="form-label">Department</label>
-                                    <input type="text" id="department" class="form-control" name="department">
+                                    <input type="text" id="department" class="form-control" name="department" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="contact" class="form-label">Contact</label>
-                                    <input type="text" id="contact" class="form-control" name="contact" required>
+                                    <label for="contact" class="form-label">Contact Number</label>
+                                    <input type="tel" id="contact" class="form-control" name="contact" required>
                                     <div class="error-message" id="contactError"></div>
                                 </div>
 
@@ -148,13 +141,14 @@ if (isset($_POST["signup"])) {
 
                             <!-- Step 2 -->
                             <div class="step" id="step2">
+                                <div class="step-title">Step 2: Account Information</div>
                                 <div class="mb-3">
                                     <label for="country" class="form-label">Select Country</label>
                                     <select class="form-control" id="country" name="country" required>
                                         <option value="" disabled selected>Select your country</option>
                                         <option value="United States">United States</option>
                                         <option value="Canada">Canada</option>
-                                        <!-- Other countries -->
+                                        <!-- Add other countries as needed -->
                                     </select>
                                     <div class="error-message" id="countryError"></div>
                                 </div>
@@ -168,12 +162,16 @@ if (isset($_POST["signup"])) {
                                 <div class="mb-3">
                                     <label for="cpassword" class="form-label">Confirm Password</label>
                                     <input type="password" id="cpassword" class="form-control" name="cpassword" required>
-                                    <div class="error-message" id="passwordError"></div>
+                                    <div class="error-message" id="cpasswordError"></div>
                                 </div>
 
                                 <div class="mt-4 d-grid">
                                     <button type="button" class="btn btn-secondary btn-lg" id="prevStep">Back</button>
                                     <button type="submit" class="btn btn-primary btn-lg my-2" name="signup">Submit</button>
+                                </div>
+                                <div class="d-flex justify-content-between my-3">
+                                    <a href="login.php" class="text-decoration-none">Already have an account? Login</a>
+                                    <a href="Choose_Password.php" class="text-decoration-none">Choose Password</a>
                                 </div>
                             </div>
 
@@ -190,71 +188,18 @@ if (isset($_POST["signup"])) {
         const step1 = document.getElementById('step1');
         const step2 = document.getElementById('step2');
 
-        nextStepBtn.addEventListener('click', function () {
+        nextStepBtn.addEventListener('click', function() {
             step1.classList.remove('active');
             step2.classList.add('active');
         });
 
-        prevStepBtn.addEventListener('click', function () {
+        prevStepBtn.addEventListener('click', function() {
             step2.classList.remove('active');
             step1.classList.add('active');
         });
-//         const form = document.getElementById('registrationForm');
-
-// form.addEventListener('submit', function (event) {
-//     event.preventDefault();
-//     const nameRegex = /^[a-zA-Z\s]+$/;
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     const contactRegex = /^\d{10,15}$/;
-//     let isValid = true;
-
-//     const fullName = document.getElementById('fullName');
-//     const email = document.getElementById('email');
-//     const password = document.getElementById('password');
-//     const contact = document.getElementById('contact');
-//     const country = document.getElementById('country');
-
-//     document.getElementById('nameError').innerText = '';
-//     document.getElementById('emailError').innerText = '';
-//     document.getElementById('passwordError').innerText = '';
-//     document.getElementById('contactError').innerText = '';
-//     document.getElementById('countryError').innerText = '';
-
-//     if (!nameRegex.test(fullName.value)) {
-//         document.getElementById('nameError').innerText = 'Please enter a valid name.';
-//         isValid = false;
-//     }
-
-//     if (!emailRegex.test(email.value)) {
-//         document.getElementById('emailError').innerText = 'Please enter a valid email address.';
-//         isValid = false;
-//     }
-
-//     if (password.value.length < 6) {
-//         document.getElementById('passwordError').innerText = 'Password must be at least 6 characters long.';
-//         isValid = false;
-//     }
-
-//     if (!contactRegex.test(contact.value)) {
-//         document.getElementById('contactError').innerText = 'Contact number must be 10-15 digits.';
-//         isValid = false;
-//     }
-
-//     if (country.value === "") {
-//         document.getElementById('countryError').innerText = 'Please select a country.';
-//         isValid = false;
-//     }
-
-//     if (isValid) {
-//         form.submit();
-//     }
-// });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
-
-
-
