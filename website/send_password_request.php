@@ -26,7 +26,7 @@ if ($conn->affected_rows > 0) {
 
     
     $mail->Body = <<<END
-        Click <a href="http://localhost/test_lab/reset_password.php?token=$token">here</a> to reset your password.
+        Click <a href="http://localhost/test_lab/website/reset_password.php?token=$token">here</a> to reset your password.
     END;
 
     try {
