@@ -15,19 +15,16 @@ $stmt->bind_param("sss", $token_hash, $expiry, $email);
 $stmt->execute();
 
 if ($conn->affected_rows > 0) {
-    // Require the mailer script
+
     $mail = require __DIR__ . "/mailer.php";
     
-    // Set email sender's address
     $mail->setFrom("srselectricallab@gmail.com");
 
-    // Add recipient's email address
     $mail->addAddress($email);
 
-    // Set the subject of the email
     $mail->Subject = "Password Reset";
 
-    // Set the body of the email with a link to reset the password
+    
     $mail->Body = <<<END
         Click <a href="http://localhost/test_lab/reset_password.php?token=$token">here</a> to reset your password.
     END;

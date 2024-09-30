@@ -3,7 +3,7 @@ include("conn.php");
 session_start();
 
 if(isset($_SESSION["email"])){
-    header("location:index.php");
+    header("location:home.php");
     exit();
 }
 
@@ -23,7 +23,7 @@ if(isset($_POST["login"])){
             $_SESSION["password"] = $row["password"];
             echo "<script>
                 alert('Login Successful!');
-                window.location.href = 'index.php'; 
+                window.location.href = 'home.php'; 
             </script>";
         } else {
             echo "<script>

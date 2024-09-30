@@ -28,7 +28,7 @@
     /* Hero Section */
     .hero-section {
       height: 100vh;
-      background: linear-gradient(to bottom right, rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('./assets/img/laboratory-3d-glassware.jpg') no-repeat center center/cover;
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.2), rgba(0,0,0,0.3)), url('./assets/img/laboratory-3d-glassware.jpg') no-repeat center center/cover;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -44,7 +44,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(0, 0, 0, 0.40);
       z-index: 0;
     }
 
@@ -94,6 +94,10 @@
       margin-bottom: 50px;
       font-weight: 700;
       letter-spacing: 1.5px;
+    }
+
+    .lead {
+      font-size: 1.25rem;
     }
 
     .process-card {
@@ -161,7 +165,8 @@
 <section class="hero-section">
   <div class="hero-content">
     <h1 class="animate__animated animate__fadeInUp">Welcome to SRS Electrical Appliances</h1>
-    <p class="animate__animated animate__fadeInUp">Crafting the Future of Electrical Products</p>
+    <p class="animate__animated animate__fadeInUp tagline">Crafting the Future of Electrical Products</p>
+    <p class="lead">We have a network in more than <strong>50 countries</strong> worldwide!</p>
     <a href="login.php" class="btn btn-custom animate__animated animate__fadeInUp">Login</a>
     <a href="signup.php" class="btn btn-outline-light btn-lg ms-3 animate__animated animate__fadeInUp">Signup</a>
   </div>
