@@ -49,11 +49,14 @@ if(isset($_POST["login"])){
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
     <!-- Custom CSS -->
     <style>
         body {
-            background: #121212;
+            background-image: url('./path_to_your_background_image.jpg');
+            background-size: cover;
+            background-position: center;
             color: #e0e0e0;
             font-family: 'Poppins', sans-serif;
             display: flex;
@@ -62,9 +65,10 @@ if(isset($_POST["login"])){
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            backdrop-filter: blur(5px);
         }
         .login-container {
-            background-color: rgba(40, 40, 40, 0.9);
+            background-color: rgba(40, 40, 40, 0.8);
             border-radius: 15px;
             padding: 40px;
             max-width: 400px;
@@ -86,11 +90,11 @@ if(isset($_POST["login"])){
             margin-bottom: 20px;
         }
         .form-control:focus {
-            border-color: #bb86fc;
-            box-shadow: 0 0 10px rgba(187, 134, 252, 0.7);
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px rgba(106, 13, 173, 0.7);
         }
         .btn-login {
-            background-color: #bb86fc;
+            background-color: #ff69b4;
             border: none;
             color: #fff;
             padding: 12px;
@@ -100,26 +104,26 @@ if(isset($_POST["login"])){
             transition: background-color 0.3s;
         }
         .btn-login:hover {
-            background-color: #7b49e1;
+            background-color: #ff69b4;
         }
         .social-buttons a {
             margin: 0 10px;
-            color: #bb86fc;
+            color: #ff69b4;
             font-size: 20px;
             transition: color 0.3s;
         }
         .social-buttons a:hover {
-            color: #7b49e1;
+            color: #ff69b4;
         }
         .forgot-password {
-            color: #bb86fc;
+            color: #ff69b4;
             text-decoration: none;
         }
         .forgot-password:hover {
-            color: #7b49e1;
+            color: #ff69b4;
         }
         .text-decoration-none {
-            color: #bb86fc;
+            color: #ff69b4;
         }
         .bg-overlay {
             position: absolute;
@@ -129,6 +133,17 @@ if(isset($_POST["login"])){
             height: 100%;
             background: radial-gradient(circle at center, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1));
             z-index: -1;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper .toggle-password {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ff69b4;
         }
     </style>
 </head>
@@ -143,8 +158,11 @@ if(isset($_POST["login"])){
                         <div class="mb-3">
                             <input type="email" class="form-control" placeholder="Email" name="email" required>
                         </div>
-                        <div class="mb-3">
-                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        <div class="mb-3 password-wrapper">
+                            <input type="password" class="form-control" placeholder="Password" name="password" id="password" required>
+                            <span class="toggle-password" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div class="form-check">
@@ -171,5 +189,22 @@ if(isset($_POST["login"])){
     <!-- Bootstrap JS & Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS for Password Toggler -->
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>

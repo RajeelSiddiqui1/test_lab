@@ -41,35 +41,69 @@ if (isset($_POST["signup"])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registration Form</title>
+    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            background: #e9ecef;
+            background-color: #121212;
             font-family: 'Poppins', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
         }
 
         .card-registration {
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
+            background-color: #1f1f1f;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h3 {
+            color: #ff69b4;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
         }
 
         .form-control:focus {
+            background-color: #444;
+            border-color: #ff69b4;
             box-shadow: none;
-            border-color: #6c757d;
         }
 
-        .btn-primary {
-            background-color: #007bff;
+        .btn-primary,
+        .btn-secondary {
+            background-color: #ff69b4;
             border: none;
+            padding: 10px;
+            font-weight: 600;
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
+        .btn-primary:hover,
+        .btn-secondary:hover {
+            background-color: #ff3399;
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ff69b4;
         }
 
         label {
-            font-weight: 600;
+            color: #ccc;
         }
 
         .error-message {
@@ -85,10 +119,13 @@ if (isset($_POST["signup"])) {
             display: block;
         }
 
-        .step-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 15px;
+        a {
+            color: #ff69b4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #ff3399;
         }
 
         @media (max-width: 576px) {
@@ -96,19 +133,36 @@ if (isset($_POST["signup"])) {
                 max-width: 100%;
             }
         }
+
+        .position-relative {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 75%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .form-control {
+            padding-right: 40px;
+            /* Space for the icon */
+        }
     </style>
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container ">
         <div class="row justify-content-center">
-            <div class="col-md-6 mb-4">
+            <div class="col-md-5 mb-4 mt-2">
                 <div class="card card-registration">
-                    <div class="card-body p-4">
-                        <h3 class="text-center pb-4">Registration Form</h3>
+                    <div class="card-body ">
+                        <h3>Sign Up</h3>
                         <form id="registrationForm" method="POST" enctype="multipart/form-data" novalidate>
 
-                            <!-- Step 1 -->
+                            <!-- Step 1: Personal Information -->
                             <div class="step active" id="step1">
                                 <div class="step-title">Step 1: Personal Information</div>
                                 <div class="mb-3">
@@ -137,9 +191,12 @@ if (isset($_POST["signup"])) {
                                 <div class="mt-4 d-grid">
                                     <button type="button" class="btn btn-primary btn-lg" id="nextStep">Next</button>
                                 </div>
+                                <div class="text-center mt-3">
+                                    <a href="login.php">Already have an account? Login</a>
+                                </div>
                             </div>
 
-                            <!-- Step 2 -->
+                            <!-- Step 2: Account Information -->
                             <div class="step" id="step2">
                                 <div class="step-title">Step 2: Account Information</div>
                                 <div class="mb-3">
@@ -148,30 +205,35 @@ if (isset($_POST["signup"])) {
                                         <option value="" disabled selected>Select your country</option>
                                         <option value="United States">United States</option>
                                         <option value="Canada">Canada</option>
-                                        <!-- Add other countries as needed -->
                                     </select>
                                     <div class="error-message" id="countryError"></div>
                                 </div>
-
-                                <div class="mb-3">
+                                <div class="mb-3 position-relative">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" id="password" class="form-control" name="password" required>
+                                    <span class="toggle-password" onclick="togglePassword('password', 'toggleIconPassword')" style="color: #ff69b4;">
+                                        <i class="fas fa-eye" id="toggleIconPassword"></i>
+                                    </span>
                                     <div class="error-message" id="passwordError"></div>
                                 </div>
 
-                                <div class="mb-3">
+                                <div class="mb-3 position-relative">
                                     <label for="cpassword" class="form-label">Confirm Password</label>
                                     <input type="password" id="cpassword" class="form-control" name="cpassword" required>
+                                    <span class="toggle-password" onclick="togglePassword('cpassword', 'toggleIconCPassword')" style="color: #ff69b4;">
+                                        <i class="fas fa-eye" id="toggleIconCPassword"></i>
+                                    </span>
                                     <div class="error-message" id="cpasswordError"></div>
                                 </div>
+
 
                                 <div class="mt-4 d-grid">
                                     <button type="button" class="btn btn-secondary btn-lg" id="prevStep">Back</button>
                                     <button type="submit" class="btn btn-primary btn-lg my-2" name="signup">Submit</button>
                                 </div>
-                                <div class="d-flex justify-content-between my-3">
-                                    <a href="login.php" class="text-decoration-none">Already have an account? Login</a>
-                                    <a href="Choose_Password.php" class="text-decoration-none">Choose Password</a>
+
+                                <div class="text-center mt-3">
+                                    <a href="login.php">Already have an account? Login</a>
                                 </div>
                             </div>
 
@@ -197,8 +259,24 @@ if (isset($_POST["signup"])) {
             step2.classList.remove('active');
             step1.classList.add('active');
         });
+
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = document.getElementById(iconId);
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
     </script>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
