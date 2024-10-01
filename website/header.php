@@ -73,6 +73,7 @@
             <li><a href="#doctors">Doctors</a></li>
             <li><a href="gallery.php">Gallery</a></li>
             <li><a href="contact.php">Conatct Us</a></li>
+            <li><a href="add_product.php">Products</a></li>
             <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>
