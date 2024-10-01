@@ -91,12 +91,26 @@
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
             </li> -->
-            
+            <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+              
+              <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              
+                <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image" > </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                <div class="dropdown-header text-center">
+                
+                  <p class="mb-1 mt-3 fw-semibold text-dark"><?php echo $_SESSION['full_name']?></p>
+                  <p class="fw-light text-muted mb-0 text-dark"><?php echo $_SESSION['email']?></p>
+                </div>
+                <a href="./user-dashboard/src/index.php" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline me-2"></i> <h6 class="text-dark ">Dash Board</h6> <span class="badge badge-pill badge-danger">1</span></a>
+
+              </div>
+            </li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>
+        
 
       </div>
 

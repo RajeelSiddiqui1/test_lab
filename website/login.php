@@ -19,8 +19,15 @@ if(isset($_POST["login"])){
         $row = mysqli_fetch_array($result);
         if(password_verify($pass, $row["password"])){
             $_SESSION["id"] = $row["id"];
+            $_SESSION["full_name"] = $row["full_name"];
+            $_SESSION["department"] = $row["department"];
+            $_SESSION["contact_number"] = $row["contact_number"];
+            $_SESSION["country"] = $row["country"];
+            $_SESSION["created_at"] = $row["created_at"];
+            $_SESSION["updated_at"] = $row["updated_at"];
             $_SESSION["email"] = $row["email"];
             $_SESSION["password"] = $row["password"];
+           
             echo "<script>
                 alert('Login Successful!');
                 window.location.href = 'home.php'; 
