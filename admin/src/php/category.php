@@ -21,7 +21,7 @@ include("header.php");
         <div class="row justify-content-center mt-3">
             <div class="col-md-6 p-3 rounded-3" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;"">
                 
-                <form  method=" POST" enctype="multipart/form-data">
+                <form  method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="product_name" class="form-label">Category Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>
@@ -87,7 +87,7 @@ if (isset($_POST['upload'])) {
             if ($result) {
                 echo "<script>
                 alert('Category has been updated');
-                window.location.href='category.php';
+                window.location.href='category_details.php';
                 </script>";
             } else {
                 echo "<script>

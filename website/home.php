@@ -272,6 +272,39 @@ include("header.php");
     <!-- Faq Section -->
    
 
+    <div class="container section-title" data-aos="fade-up">
+    <h2>Categories</h2>
+    <p>Explore a wide range of categories for different products.</p>
+</div><!-- End Section Title -->
+
+<div class="container">
+
+<div class="row gy-4">
+    <?php
+    $query = "SELECT * FROM `category`";
+    $result = mysqli_query($conn, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+    ?>
+
+    <div class="col-md-4 mt-3">
+        <div class="card shadow-lg h-100" style="background:#1B1B1B; border-radius: 10px; overflow: hidden;">
+            <img src="../images/category/<?php echo $row['c_image']?>" style="height: 16rem; object-fit: cover; border-bottom: 3px solid #FF69B4;" alt="Product Image">
+            <div class="card-body text-center" style="background-color: #333; padding: 1.5rem;">
+                <h5 class="card-title text-light" style="font-weight: bold;"><?php echo $row['c_name']?></h5>
+                <p class="card-text text-light" style="font-size: 0.9rem; line-height: 1.4;"><?php echo substr($row['c_desc'], 0, 120).'...'?></p>
+                <a href="category_detail.php?id=<?php echo $row['id']?>" class="btn btn-outline-light mt-3" style="padding: 0.5rem 1.5rem; font-weight: 500;">View Details</a>
+            </div>
+        </div>
+    </div>
+
+    <?php } ?>
+</div>
+
+
+</div>
+
+    
+
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
 
