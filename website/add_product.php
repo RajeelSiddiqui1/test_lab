@@ -1,5 +1,17 @@
 <?php
 include("conn.php");
+session_start();
+if (!isset($_SESSION["email"])) {
+    header("location:login.php");
+    exit();
+}
+
+// Retrieve user_id based on logged-in user's email
+$email = $_SESSION["email"];
+$userQuery = "SELECT id FROM users WHERE email = '$email'";
+$userResult = mysqli_query($conn, $userQuery);
+$user = mysqli_fetch_assoc($userResult);
+$userId = $user['id'];
 ?>
 
 <?php
@@ -9,86 +21,90 @@ include("header.php");
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <h2 class="text-center">Add Product with Image</h2>
-            <form action="" method="post" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="product_code" class="form-label">Product Code</label>
-                    <input type="text" class="form-control" id="product_code" name="product_code" required>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label for="id">Product ID (10 digits):</label>
+                    <input type="text" id="id" class="form-control" name="id" required pattern="\d{10}" title="Please enter a 10-digit ID">
                 </div>
-                <div class="mb-3">
-                    <label for="manufacturing_no" class="form-label">Manufacturing Number</label>
-                    <?php
-                    // Auto-generate the next manufacturing number
-                    $result = $conn->query("SELECT MAX(manufacturing_no) AS max_no FROM products");
-                    $row = $result->fetch_assoc();
-                    $next_manufacturing_no = $row['max_no'] ? $row['max_no'] + 1 : 1; // Start from 1 if no products yet
-                    ?>
-                    <input type="number" class="form-control" id="manufacturing_no" name="manufacturing_no" value="<?php echo $next_manufacturing_no; ?>" readonly>
+                <div class="mb-4">
+                    <label for="product_name">Product Name:</label>
+                    <input type="text" id="product_name" class="form-control" name="product_name" required>
                 </div>
-                <div class="mb-3">
-                    <label for="product_name" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" id="product_name" name="product_name" required>
+                <div class="mb-4">
+                    <label for="product_description">Product Description:</label>
+                    <textarea id="product_description" class="form-control" name="product_description" required></textarea>
                 </div>
-                <div class="mb-3">
-                    <label for="manufacture_date" class="form-label">Manufacture Date</label>
-                    <input type="date" class="form-control" id="manufacture_date" name="manufacture_date" required>
+                <div class="mb-4">
+                    <label for="product_quantity">Product Quantity:</label>
+                    <input type="number" id="product_quantity" class="form-control" name="product_quantity" required>
                 </div>
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select class="form-select" id="status" name="status" required>
-                        <option value="tested">Tested</option>
-                        <option value="retest">Retest</option>
-                        <option value="cpri_testing">CPRI Testing</option>
-                        <option value="market_released">Market Released</option>
+                <div class="mb-4">
+                    <label for="product_price">Product Price:</label>
+                    <input type="number" id="product_price" class="form-control" name="product_price" required>
+                </div>
+                <div class="mb-4">
+                    <label for="category_id">Category:</label>
+                    <select id="category_id" class="form-control" name="category_id" required>
+                        <?php
+                        $query = "SELECT * FROM `category`";
+                        $result = mysqli_query($conn, $query);
+                        while ($row = mysqli_fetch_assoc($result)) { ?>
+                            <option value="<?php echo $row['id'] ?>"><?php echo $row['c_name'] ?></option>
+                        <?php } ?>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="image" class="form-label">Product Image</label>
-                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                <div class="mb-4">
+                    <label for="product_image">Product Image:</label>
+                    <input type="file" id="product_image" class="form-control" name="product_image" required>
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
+                <div class="d-grid">
+                    <button class="btn btn-danger" name="submit">Submit</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
 <?php
-if (isset($_POST['submit'])) {
-    $product_code = $_POST['product_code'];
-    $manufacturing_no = $_POST['manufacturing_no'];
-    $product_name = $_POST['product_name'];
-    $manufacture_date = $_POST['manufacture_date'];
-    $status = $_POST['status'];
+if (isset($_POST["submit"])) {
 
-    
-    $result = $conn->query("SELECT MAX(CAST(test AS UNSIGNED)) AS max_test FROM products WHERE product_code = '$product_code'");
-    $row = $result->fetch_assoc();
-    $next_test = $row['max_test'] ? $row['max_test'] + 1 : 1;
-    $test = str_pad($next_test, 12, "0", STR_PAD_LEFT); // Ensure it's 12 
+    // Validate and retrieve the 10-digit Product ID
+    $id = $_POST['id'];
+    if (!preg_match('/^\d{10}$/', $id)) {
+        echo "Error: Product ID must be exactly 10 digits.";
+        exit;
+    }
 
-    $image = $_FILES['image']['name'];
-    $target_dir = "../images/products/";
-    $target_file = $target_dir . basename($image);
+    // Retrieve other form data
+    $na = $_POST["product_name"];
+    $pd = $_POST["product_description"];
+    $pq = $_POST["product_quantity"];
+    $pp = $_POST["product_price"];
+    $catId = $_POST["category_id"];
+    $im = $_FILES["product_image"];
+    $image = $im["name"];
 
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-        // Generate product ID automatically
-        $product_id = $product_code . $test . str_pad($manufacturing_no, 5, "0", STR_PAD_LEFT);
+    // Auto-generate a 12-digit test_id
+    $test_id = str_pad(rand(0, pow(10, 12) - 1), 12, '0', STR_PAD_LEFT);
 
-     
-        $sql = "INSERT INTO products (product_id, product_code, test, manufacturing_no, product_name, manufacture_date, status, product_image) 
-                VALUES ('$product_id', '$product_code', '$test', '$manufacturing_no', '$product_name', '$manufacture_date', '$status', '$target_file')";
+    // Move uploaded image to the desired location
+    move_uploaded_file($im['tmp_name'], "../images/products/" . $image);
 
-        if ($conn->query($sql) === TRUE) {
-            echo "<div class='alert alert-success text-center'>Product added successfully!</div>";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
+    // Insert into the database using the correct user_id
+    $query = "INSERT INTO `tbl_products`(`id`, `test_id`, `product_name`, `product_description`, `product_quantity`, `product_image`, `product_price`, `category_id`, `user_id`) 
+              VALUES ('$id', '$test_id', '$na', '$pd', '$pq', '$image', '$pp', '$catId', '$userId')";
+
+    // Execute the query
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        echo "<script>
+                alert('Product has been sent to the tester...');
+                window.location.href='add_product.php';
+              </script>";
     } else {
-        echo "<div class='alert alert-danger text-center'>There was an error uploading the image!</div>";
+        echo "<script>alert('Something went wrong!');</script>";
     }
 }
-
-$conn->close();
 ?>
 
 <?php

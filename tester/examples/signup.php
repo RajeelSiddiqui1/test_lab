@@ -194,8 +194,8 @@ if (isset($_POST["signup"])) {
                                         <option value="" disabled selected>Select your education level</option>
                                         <option value="High School">High School</option>
                                         <option value="Associate Degree">Associate Degree</option>
-                                        <option value="Bachelor's Degree">Bachelor's Degree</option>
-                                        <option value="Master's Degree">Master's Degree</option>
+                                        <option value="Bachelor's Degree">Bachelors Degree</option>
+                                        <option value="Master's Degree">Masters Degree</option>
                                         <option value="PhD">PhD</option>
                                     </select>
                                 </div>
@@ -283,17 +283,17 @@ if (isset($_POST["signup"])) {
                                 </div>
                                 <div class="mb-3">
                                     <label for="salary">Select your salary range:</label>
-                                    <select name="salary" id="salary" required>
+                                    <select name="salary" class="form-control" id="salary" required>
                                         <option value="" disabled selected>Select your salary</option>
-                                        <option value="20000-30000">$20,000 - $30,000</option>
-                                        <option value="30001-40000">$30,001 - $40,000</option>
-                                        <option value="40001-50000">$40,001 - $50,000</option>
-                                        <option value="50001-60000">$50,001 - $60,000</option>
-                                        <option value="60001-70000">$60,001 - $70,000</option>
-                                        <option value="70001-80000">$70,001 - $80,000</option>
-                                        <option value="80001-90000">$80,001 - $90,000</option>
-                                        <option value="90001-100000">$90,001 - $100,000</option>
-                                        <option value="100001+">$100,001+</option>
+                                        <option value="$20000-$30000">$20,000 - $30,000</option>
+                                        <option value="$30001-$40000">$30,001 - $40,000</option>
+                                        <option value="$40001-$50000">$40,001 - $50,000</option>
+                                        <option value="$50001-$60000">$50,001 - $60,000</option>
+                                        <option value="$60001-$70000">$60,001 - $70,000</option>
+                                        <option value="$70001-$80000">$70,001 - $80,000</option>
+                                        <option value="$80001-$90000">$80,001 - $90,000</option>
+                                        <option value="$90001-$100000">$90,001 - $100,000</option>
+                                        <option value="$100001+">$100,001+</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
