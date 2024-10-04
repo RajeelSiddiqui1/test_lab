@@ -58,7 +58,7 @@ include("header.php");
                             <td>{$row['product_quantity']}</td>
                             <td>\${$row['product_price']}</td>
                             <td>{$row['c_name']}</td>
-                            <td><img src='../../images/products/{$row['product_image']}' alt='{$row['product_name']}' width='100'></td>
+                            <td><img src='../../images/products/{$row['product_image']}' alt='{$row['product_name']}' height='100' width='150'></td>
                             <td>{$row['status']}</td>
                           </tr>";
                 }
