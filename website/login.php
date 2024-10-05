@@ -27,6 +27,7 @@ if(isset($_POST["login"])){
             $_SESSION["updated_at"] = $row["updated_at"];
             $_SESSION["email"] = $row["email"];
             $_SESSION["password"] = $row["password"];
+            $_SESSION["image"] = $row["image"];
            
             echo "<script>
                 alert('Login Successful!');

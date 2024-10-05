@@ -37,38 +37,55 @@ include("header.php");
               </tr>
             </thead>
             <tbody>
-              <?php
-              // Adjust the query to show products from categories the tester has visited
-              $query = "
-                SELECT p.id AS product_id, p.test_id, p.product_name, p.product_description, p.product_quantity, 
-                       p.product_price, c.c_name, p.product_image, p.status 
-                FROM tbl_products p
-                INNER JOIN category c ON p.category_id = c.id
-                INNER JOIN testers ta ON ta.category_id = c.id
-                WHERE ta.id = '$id'
-              ";
-              $result = mysqli_query($conn, $query);
+            <?php
+// Adjust the query to show products from categories the tester has visited
+$query = "
+  SELECT p.id AS product_id, p.test_id, p.product_name, p.product_description, p.product_quantity, 
+         p.product_price, c.c_name, p.product_image, p.status, p.category_id 
+  FROM tbl_products p
+  INNER JOIN category c ON p.category_id = c.id
+  INNER JOIN testers ta ON ta.category_id = c.id
+  WHERE ta.id = '$id'
+";
+$result = mysqli_query($conn, $query);
 
-              if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                  echo "<tr>
-                            <td>{$row['product_id']}</td>
-                            <td>{$row['test_id']}</td>
-                            <td>{$row['product_name']}</td>
-                            <td>{$row['product_description']}</td>
-                            <td>{$row['product_quantity']}</td>
-                            <td>\${$row['product_price']}</td>
-                            <td>{$row['c_name']}</td>
-                            <td><img src='../../images/products/{$row['product_image']}' alt='{$row['product_name']}' height='100' width='150'></td>
-                            <td>{$row['status']}</td>
-                           <td><a href='res_message.php?id={$row['product_id']}' class='btn btn-info'>Action</a></td>
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        // Display the table row
+        echo "<tr>
+                <td>{$row['product_id']}</td>
+                <td>{$row['test_id']}</td>
+                <td>{$row['product_name']}</td>
+                <td>{$row['product_description']}</td>
+                <td>{$row['product_quantity']}</td>
+                <td>\${$row['product_price']}</td>
+                <td>{$row['c_name']}</td>
+                <td><img src='../../images/products/{$row['product_image']}' alt='{$row['product_name']}' height='50' width='150'></td>
+                <td>{$row['status']}</td>
+                <td><a href='res_message.php?id={$row['product_id']}' class='btn btn-info'>Action</a></td>
+              </tr>";
 
-                          </tr>";
-                }
-              } else {
-                echo "<tr><td colspan='10' class='text-center'>No products found.</td></tr>";
-              }
-              ?>
+        // Insert into the cpri_product table
+        $insert_query = "
+            INSERT INTO cpri_product 
+            (id, test_id, product_name, product_description, product_quantity, product_image, product_price, message, category_id, user_id, status) 
+            VALUES (
+                '{$row['product_id']}', 
+                '{$row['test_id']}', 
+                '{$row['product_name']}', 
+                '{$row['product_description']}', 
+                '{$row['product_quantity']}', 
+                '{$row['product_image']}', 
+                '{$row['product_price']}', 
+                'Your custom message here', 
+                '{$row['category_id']}', 
+                'your_static_user_id',  // Replace with dynamic or static user ID if needed
+                '{$row['status']}'
+            )
+        ";
+
+        // Execute the insert query
+    }}?>
             </tbody>
           </table>
         </div>
