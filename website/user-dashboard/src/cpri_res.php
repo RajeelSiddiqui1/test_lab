@@ -38,7 +38,7 @@ include("header.php");
              <tr>
               
                 
-                <td><?php echo $row['id']?></td>
+                <td><?php echo $row['product_id']?></td>
                 <td><?php echo $row['test_id']?></td>
                 <td><?php echo $row['product_name']?></td>
                 <td><?php echo substr($row['message2'],0,30).'...'?></td>
