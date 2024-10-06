@@ -6,34 +6,14 @@ if (!isset($_SESSION["email"])) {
     exit();
 }
 
-$id = $_SESSION['id'];
+
 
 $get = $_GET['id'];
-$query = "SELECT * FROM tbl_products WHERE id = '$get'";
+$query = "SELECT * FROM cpri_product WHERE id = '$get'";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $message = $_POST['message'];
-    $status = $_POST['status'];
 
-    // Update only the status and message if declined, insert to 'cpri_product' if approved
-    if ($status == 'declined') {
-        $update_query = "UPDATE tbl_products SET status = '$status', message = '$message' WHERE id = '$get'";
-        mysqli_query($conn, $update_query);
-        echo "<div class='alert alert-warning'>Product status updated to declined.</div>";
-    } else if ($status == 'approved') {
-        $insert_query = "INSERT INTO cpri_product (test_id, product_name, product_description, product_quantity, product_image, product_price, message, category_id, user_id, status)
-                         VALUES ('{$row['test_id']}', '{$row['product_name']}', '{$row['product_description']}', '{$row['product_quantity']}', '{$row['product_image']}', '{$row['product_price']}', '$message', '{$row['category_id']}', '{$row['user_id']}', '$status')";
-        mysqli_query($conn, $insert_query);
-
-        // Update status in tbl_products
-        $update_query = "UPDATE tbl_products SET status = '$status', message = '$message' WHERE id = '$get'";
-        mysqli_query($conn, $update_query);
-        echo "<div class='alert alert-success'>Product approved and inserted into cpri_product table.</div>";
-    }
-}
 ?>
 
 <?php include("header.php"); ?>
@@ -77,21 +57,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="../../images/products/<?php echo $row['product_image'] ?>" alt="Product Image" class="img-fluid">
                             </div>
                             <div class="col-12 mb-3">
-                                <label for="status" class="form-label">Status</label>
-                                <select name="status" class="form-control text-light">
-                                    <option value="approved" <?php if ($row['status'] == 'approved') echo 'selected'; ?>>Approved</option>
-                                    <option value="declined" <?php if ($row['status'] == 'declined') echo 'selected'; ?>>Declined</option>
-                                    <option value="pending" <?php if ($row['status'] == 'pending') echo 'selected'; ?>>Pending</option>
-                                </select>
+                                <form action="res_message2.php?id=<?php echo $row['id']; ?>" method="POST">
+                                    <!-- Status Dropdown -->
+                                    <div class="form-group">
+                                        <label for="status2" class="form-label">Status</label>
+                                        <select name="status2" id="status2" class="form-control status-select">
+                                            <option value="<?php echo $row['status2']?>" class="bg-dark text-light"><?php echo $row['status2']?></option>
+                                            <option value="pending" class="bg-dark text-light">Pending</option>
+                                            <option value="approved" class="bg-dark text-light">Approved</option>
+                                            <option value="declined" class="bg-dark text-light">Declined</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Message Text Area -->
+                                    <div class="col-12 mb-3">
+                                        <label for="message2" class="form-label">Message</label>
+                                        <textarea name="message2" id="message2" class="form-control text-light bg-dark" rows="4"></textarea>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
                             </div>
 
-                            <div class="col-12 mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea name="message" class="form-control text-light"><?php echo $row['message']; ?></textarea>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+
+
                         </form>
                     </div>
                 </div>
@@ -99,6 +91,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Sanitize and retrieve POST data
+    $status2 = mysqli_real_escape_string($conn, $_POST['status2']);
+    $message2 = mysqli_real_escape_string($conn, $_POST['message2']);
+    $id = intval($_GET['id']);  // Ensure ID is treated as an integer
+
+    // Update status2
+    $sqlUpdateStatus = "UPDATE `cpri_product` SET `status2` = '$status2' WHERE `id` = $id";
+    $resultStatus = mysqli_query($conn, $sqlUpdateStatus);
+
+    // Insert or append message2 if provided
+    if (!empty($message2)) {
+        $sqlInsertMessage = "UPDATE `cpri_product` SET `message2` = CONCAT(IFNULL(`message2`, ''), '\n', '$message2') WHERE `id` = $id";
+        $resultMessage = mysqli_query($conn, $sqlInsertMessage);
+    }
+
+    // Check if status2 was updated and message2 was inserted (if applicable)
+    if ($resultStatus && (empty($message2) || $resultMessage)) {
+        echo "<script>
+                alert('Status updated and message inserted successfully');
+                window.location.href = 'res_message.php';
+              </script>";
+    } else {
+        echo "<script>
+                alert('Failed to update status or insert message');
+                window.location.href = 'res_message.php';
+              </script>";
+    }
+}
+?>
+
+
 
 <div class="fixed-plugin">
     <div class="dropdown show-dropdown">

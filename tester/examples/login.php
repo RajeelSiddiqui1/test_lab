@@ -8,7 +8,7 @@ if (isset($_POST["login"])) {
     $pass = $_POST['password'];
 
     // Query to get the user based on the email
-    $query = "SELECT * FROM `cpr_tester` WHERE `email`='$em'";
+    $query = "SELECT * FROM `testers` WHERE `email`='$em'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
