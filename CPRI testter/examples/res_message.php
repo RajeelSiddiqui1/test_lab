@@ -27,7 +27,7 @@ $row = mysqli_fetch_assoc($result);
             <div class="col-md-8">
                 <div class="card card-chart">
                     <div class="card-header">
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
                             <div class="col-12 mb-3">
                                 <label for="id" class="form-label">Product ID</label>
                                 <input type="text" name="id" class="form-control text-light" value="<?php echo $row['id'] ?>" readonly>
@@ -56,32 +56,20 @@ $row = mysqli_fetch_assoc($result);
                                 <label for="product_image" class="form-label">Product Image</label>
                                 <img src="../../images/products/<?php echo $row['product_image'] ?>" alt="Product Image" class="img-fluid">
                             </div>
-                            <div class="col-12 mb-3">
-                                <form action="res_message2.php?id=<?php echo $row['id']; ?>" method="POST">
-                                    <!-- Status Dropdown -->
+                            <form action="res_message.php?id=<?php echo $row['id'] ?>" method="POST">
+                                <td>
                                     <div class="form-group">
-                                        <label for="status2" class="form-label">Status</label>
-                                        <select name="status2" id="status2" class="form-control status-select">
-                                            <option value="<?php echo $row['status2']?>" class="bg-dark text-light"><?php echo $row['status2']?></option>
-                                            <option value="pending" class="bg-dark text-light">Pending</option>
-                                            <option value="approved" class="bg-dark text-light">Approved</option>
-                                            <option value="declined" class="bg-dark text-light">Declined</option>
+
+                                        <select name="status" class="form-control status-select bg-dark" onchange="this.form.submit()">
+                                            <option class="text-light" value="pending" class="text-warning">Pending</option>
+                                            <option value="approved" class="bg-dark">Approved </option>
+                                            <option value="declined" class="bg-dark">Declined</option>
                                         </select>
                                     </div>
+                                </td>
+                            </form>
 
-                                    <!-- Message Text Area -->
-                                    <div class="col-12 mb-3">
-                                        <label for="message2" class="form-label">Message</label>
-                                        <textarea name="message2" id="message2" class="form-control text-light bg-dark" rows="4"></textarea>
-                                    </div>
-
-                                    <!-- Submit Button -->
-                                    <div class="col-12">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-
+                            
 
 
                         </form>
@@ -94,34 +82,21 @@ $row = mysqli_fetch_assoc($result);
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and retrieve POST data
-    $status2 = mysqli_real_escape_string($conn, $_POST['status2']);
-    $message2 = mysqli_real_escape_string($conn, $_POST['message2']);
-    $id = intval($_GET['id']);  // Ensure ID is treated as an integer
+    $status = $_POST['status'];
+    $id = $_GET['id'];
 
-    // Update status2
-    $sqlUpdateStatus = "UPDATE `cpri_product` SET `status2` = '$status2' WHERE `id` = $id";
-    $resultStatus = mysqli_query($conn, $sqlUpdateStatus);
+    $sql = "UPDATE `cpri_product` SET status2 = '$status' WHERE id = $id";
+    $result = mysqli_query($conn, $sql);
 
-    // Insert or append message2 if provided
-    if (!empty($message2)) {
-        $sqlInsertMessage = "UPDATE `cpri_product` SET `message2` = CONCAT(IFNULL(`message2`, ''), '\n', '$message2') WHERE `id` = $id";
-        $resultMessage = mysqli_query($conn, $sqlInsertMessage);
-    }
-
-    // Check if status2 was updated and message2 was inserted (if applicable)
-    if ($resultStatus && (empty($message2) || $resultMessage)) {
-        echo "<script>
-                alert('Status updated and message inserted successfully');
-                window.location.href = 'res_message.php';
-              </script>";
+    if ($result) {
+        echo "<script>alert('Status updated successfully')
+        window.location.href= 'user-test.php'</script>";
     } else {
-        echo "<script>
-                alert('Failed to update status or insert message');
-                window.location.href = 'res_message.php';
-              </script>";
+        echo "<script>alert('Status updatedion Failed')
+        window.location.href= 'res_message.php'</script>";
     }
 }
+
 ?>
 
 

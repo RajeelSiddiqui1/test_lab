@@ -50,43 +50,21 @@ $query = "
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Display the table row
-        echo "<tr>
-                <td>{$row['id']}</td>
-                <td>{$row['test_id']}</td>
-                <td>{$row['product_name']}</td>
-                <td>{$row['product_description']}</td>
-                <td>{$row['product_quantity']}</td>
-                <td>\${$row['product_price']}</td>
-                <td>{$row['c_name']}</td>
-                <td><img src='../../images/products/{$row['product_image']}' alt='{$row['product_name']}' height='50' width='150'></td>
-                <td>{$row['status']}</td>
-               <td><a href='res_message.php?id=<?php echo $row[id]; ?>' class='btn btn-info'>Action</a></td>
+    while ($row = mysqli_fetch_assoc($result)) { ?>
+        <tr>
+                <td><?php echo $row['id']?></td>
+                <td><?php echo $row['test_id']?></td>
+                <td><?php echo $row['product_name']?> </td>
+                <td><?php echo $row['product_description']?> </td>
+                <td><?php echo $row['product_quantity']?> </td>
+                <td>$<?php echo $row['product_price']?> </td>
+                <td><?php echo $row['c_name']?></td>
+                <td><img src="../../images/products/<?php echo $row['product_image']?>" alt="" height='50' width='150'></td>
+                <td><?php echo $row['status']?></td>
+               <td><a href='res_message.php?id=<?php echo $row['id']; ?>' class='btn btn-info'>Action</a></td>
 
-              </tr>";
-
-        // Insert into the cpri_product table
-        $insert_query = "
-            INSERT INTO cpri_product 
-            (id, test_id, product_name, product_description, product_quantity, product_image, product_price, message, category_id, user_id, status) 
-            VALUES (
-                '{$row['id']}', 
-                '{$row['test_id']}', 
-                '{$row['product_name']}', 
-                '{$row['product_description']}', 
-                '{$row['product_quantity']}', 
-                '{$row['product_image']}', 
-                '{$row['product_price']}', 
-                'Your custom message here', 
-                '{$row['category_id']}', 
-                'your_static_user_id',  // Replace with dynamic or static user ID if needed
-                '{$row['status']}'
-            )
-        ";
-
-        // Execute the insert query
-    }}?>
+              </tr>
+  <?php  }}?>
             </tbody>
           </table>
         </div>
