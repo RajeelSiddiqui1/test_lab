@@ -54,7 +54,7 @@ include("header.php");
                             <td><a href="<?php echo $row['portfolio_url']; ?>" target="_blank">Portfolio</a></td>
                             <td><?php echo $row['salary']; ?></td>
                             <td>
-                               <form action="tester_res.php" method="POST">
+                               <form action="cpri_res.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $row['id']?>">
                                 <input class="my-2" type="submit" name="approved" value="Approved">
                                 <input type="submit" name="deny" value="Deny">

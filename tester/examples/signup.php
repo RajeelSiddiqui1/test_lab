@@ -194,8 +194,8 @@ if (isset($_POST["signup"])) {
                                         <option value="" disabled selected>Select your education level</option>
                                         <option value="High School">High School</option>
                                         <option value="Associate Degree">Associate Degree</option>
-                                        <option value="Bachelor's Degree">Bachelors Degree</option>
-                                        <option value="Master's Degree">Masters Degree</option>
+                                        <option value="Bachelors Degree">Bachelors Degree</option>
+                                        <option value="Masters Degree">Masters Degree</option>
                                         <option value="PhD">PhD</option>
                                     </select>
                                 </div>
@@ -261,7 +261,6 @@ if (isset($_POST["signup"])) {
                                         <option value="Austria">Austria</option>
                                         <option value="Finland">Finland</option>
                                         <option value="Ireland">Ireland</option>
-                                        <option value="Israel">Israel</option>
                                         <option value="Poland">Poland</option>
                                         <option value="Czech Republic">Czech Republic</option>
                                         <option value="Portugal">Portugal</option>

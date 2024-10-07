@@ -97,11 +97,11 @@ include("header.php");
       $image = $im['name'];
 
       if($image == ""){
-          $query = "UPDATE `testers` SET `full_name`='$na',`email`='$em',`contact_number`='$cont',`skills`='$skill' WHERE `id`=$id";
+          $query = "UPDATE `cpr_tester` SET `full_name`='$na',`email`='$em',`contact_number`='$cont',`skills`='$skill' WHERE `id`=$id";
       } else {
           move_uploaded_file($im['tmp_name'],"../../images/testers/".$image);
 
-          $query = "UPDATE `testers` SET `full_name`='$na',`email`='$em',`contact_number`='$cont',`skills`='$skill',`image`='$image' WHERE `id`=$id";
+          $query = "UPDATE `cpr_tester` SET `full_name`='$na',`email`='$em',`contact_number`='$cont',`skills`='$skill',`image`='$image' WHERE `id`=$id";
       }
 
       $result = mysqli_query($conn, $query);
