@@ -36,7 +36,7 @@ include("header.php");
               
                 <p class="card-text fw-bold"><?php echo $row['salary']?></p>
                 <div class="d-flex">
-                    <a href="tester_pulished" class="btn btn-primary mx-4">Pulished</a>
+                <a href="tester_pulished.php?id=<?php echo $row['id']?>" class="btn btn-primary mx-4">Pulished</a>
                     <a href="tester_delete" class="btn btn-danger mx-4">Delete</a>
                 </div>
             </div>

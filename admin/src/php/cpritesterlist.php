@@ -16,7 +16,7 @@ include("header.php");
 <div class="page-wrapper px-5 ">
     <div class="conatiner">
         <div class="row text-center">
-            <h2 class="p-5">Tester Lists</h2>
+            <h2 class="p-5">CPRI Tester Lists</h2>
         </div>
         <div class="row">
            <?php
@@ -36,7 +36,7 @@ include("header.php");
               
                 <p class="card-text fw-bold"><?php echo $row['salary']?></p>
                 <div class="d-flex">
-                    <a href="tester_pulished" class="btn btn-primary mx-4">Pulished</a>
+                    <a href="tester_pulished.php?id=<?php echo $row['id']?>" class="btn btn-primary mx-4">Pulished</a>
                     <a href="tester_delete" class="btn btn-danger mx-4">Delete</a>
                 </div>
             </div>
