@@ -215,7 +215,7 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a class="sidebar-link sidebar-link" href="cpri_res.php" aria-expanded="false">
+                            <a class="sidebar-link sidebar-link" href="user_list.php" aria-expanded="false">
                                 <i data-feather="users" class="feather-icon"></i>
                                 <span class="hide-menu">User's List</span>
                             </a>

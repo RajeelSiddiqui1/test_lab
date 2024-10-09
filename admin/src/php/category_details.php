@@ -46,8 +46,8 @@ include("header.php");
       <th><?php echo $row['c_name']?></th>
       <th><?php echo substr($row['c_desc'],0,320,).'...'?></th>
       <td><img src="../../../images/category/<?php echo $row['c_image'] ?>" style="height:100px;width:100px; border: 1px solid #ccc;" alt=""></td>
-      <td><a href="" class="btn btn-warning">Edit</a></td>
-      <td><a href="" class="btn btn-danger">Delete</a</td>
+      <td><a href="category_edit.php?id=<?php echo $row['id']?>" class="btn btn-warning">Edit</a></td>
+      <td><a href="delete_category.php?id=<?php echo $row['id']?>" class="btn btn-danger">Delete</a</td>
     </tr>
   </tbody>
 <?php }

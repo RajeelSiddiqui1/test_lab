@@ -20,6 +20,20 @@ include("header.php");
     <div class="col-md-4">
         <div class="card text-center">
             <?php
+            $category_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM admin"));
+            ?>
+            <div class="card-body">
+                
+                <i class="fa fa-user" style="font-size: 50px; height: 50px; width: 50px;"></i>
+                <h5 class="card-title mt-3">Admin</h5>
+                <h2><?php echo $category_count ?></h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center">
+            <?php
             $category_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users"));
             ?>
             <div class="card-body">
@@ -109,11 +123,11 @@ include("header.php");
     <div class="col-md-4">
         <div class="card text-center">
             <?php
-            $published_cpri_tester_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM cpri_show_to_user"));
+            $published_cpri_tester_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tbl_products"));
             ?>
             <div class="card-body">
                 <i class="fa fa-check-square" style="font-size: 50px; height: 50px; width: 50px;"></i>
-                <h5 class="card-title mt-3">Published CPRI Tester</h5>
+                <h5 class="card-title mt-3">Testes</h5>
                 <h2><?php echo $published_cpri_tester_count ?></h2>
             </div>
         </div>
@@ -122,11 +136,11 @@ include("header.php");
     <div class="col-md-4">
         <div class="card text-center">
             <?php
-            $published_cpri_tester_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM cpri_show_to_user"));
+            $published_cpri_tester_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM cpri_product"));
             ?>
             <div class="card-body">
                 <i class="fa fa-check-square" style="font-size: 50px; height: 50px; width: 50px;"></i>
-                <h5 class="card-title mt-3">Published CPRI Tester</h5>
+                <h5 class="card-title mt-3"> CPRI Testes </h5>
                 <h2><?php echo $published_cpri_tester_count ?></h2>
             </div>
         </div>

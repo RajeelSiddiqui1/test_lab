@@ -86,12 +86,12 @@ if (isset($_POST['upload'])) {
             
             if ($result) {
                 echo "<script>
-                alert('Category has been updated');
+                alert('Category has been uploaded');
                 window.location.href='category_details.php';
                 </script>";
             } else {
                 echo "<script>
-                alert('Error occurred while updating category.');
+                alert('Error occurred while uploading category.');
                 window.location.href='category.php';
                 </script>";
             }
