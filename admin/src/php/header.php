@@ -92,15 +92,15 @@
                     <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
                         <!-- Notification -->
                         <li class="nav-item dropdown">
-                        
+
                         </li>
                         <!-- End Notification -->
                         <!-- ============================================================== -->
                         <!-- create new -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                           
-                        <h2 class="mt-2">SRS ELECTRICAL LAB</h2>
+
+                            <h2 class="mt-2">SRS ELECTRICAL LAB</h2>
                         </li>
                     </ul>
                     <!-- ============================================================== -->
@@ -111,7 +111,7 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                         <li class="nav-item d-none d-md-block">
-                         
+
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -119,20 +119,20 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img src="../../../images/admin/<?php echo $_SESSION['image']?>"  alt="user" class="rounded-circle"
+                                <img src="../../../images/admin/<?php echo $_SESSION['image'] ?>" alt="user" class="rounded-circle"
                                     width="50" height="50">
-                                   
+
                                 <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
-                                        class="text-dark"><?php echo $_SESSION['name']?></span> <i data-feather="chevron-down"
+                                        class="text-dark"><?php echo $_SESSION['name'] ?></span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
                                         class="svg-icon mr-2 ml-1"></i>
-                                    <?php echo $_SESSION['email']?></a>
-                                <!-- <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
+                                    <?php echo $_SESSION['email'] ?></a>
+                                <!--<a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
                                         class="svg-icon mr-2 ml-1"></i>
-                                    My Balance</a>
+                                    My Bala nce</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Inbox</a>
@@ -168,43 +168,78 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="index.php"
-                                aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
-                                    class="hide-menu">Dashboard</span></a></li>
-                        <li class="list-divider"></li>
-                        <!-- <li class="nav-small-cap"><span class="hide-menu">Applications</span></li> -->
-
-                        <li class="sidebar-item"> <a class="sidebar-link" href="category_details.php"
-                                aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span
-                                    class="hide-menu">Category
-                                </span></a>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="index.php" aria-expanded="false">
+                                <i data-feather="home" class="feather-icon"></i>
+                                <span class="hide-menu">Dashboard</span>
+                            </a>
                         </li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="tester_res.php"
-                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                                    class="hide-menu">Tester Login Res</span></a></li>
+                        <li class="list-divider"></li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="cpri_res.php"
-                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                                    class="hide-menu">CPRI Login Res</span></a></li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="category_details.php" aria-expanded="false">
+                                <i data-feather="grid" class="feather-icon"></i>
+                                <span class="hide-menu">Category</span>
+                            </a>
+                        </li>
 
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="tester_res.php" aria-expanded="false">
+                                <i data-feather="user-check" class="feather-icon"></i>
+                                <span class="hide-menu">Tester Login Res</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="cpri_res.php" aria-expanded="false">
+                                <i data-feather="user-check" class="feather-icon"></i>
+                                <span class="hide-menu">CPRI Login Res</span>
+                            </a>
+                        </li>
 
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">User Lists</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="testerlist.php"
-                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                                    class="hide-menu">Tester List</span></a></li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="cpritesterlist.php"
-                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                                    class="hide-menu">CPRI Tester List</span></a></li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="testerlist.php" aria-expanded="false">
+                                <i data-feather="users" class="feather-icon"></i>
+                                <span class="hide-menu">Tester List</span>
+                            </a>
+                        </li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="cpri_res.php"
-                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                                    class="hide-menu">User's List</span></a></li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="cpritesterlist.php" aria-expanded="false">
+                                <i data-feather="users" class="feather-icon"></i>
+                                <span class="hide-menu">CPRI Tester List</span>
+                            </a>
+                        </li>
 
-                       
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="cpri_res.php" aria-expanded="false">
+                                <i data-feather="users" class="feather-icon"></i>
+                                <span class="hide-menu">User's List</span>
+                            </a>
+                        </li>
+
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Published List</span></li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="Published_tester.php" aria-expanded="false">
+                                <i data-feather="check-circle" class="feather-icon"></i>
+                                <span class="hide-menu">Published Tester</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="Published_cpri_tester.php" aria-expanded="false">
+                                <i data-feather="check-circle" class="feather-icon"></i>
+                                <span class="hide-menu">Published CPRI Tester</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
+
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
@@ -213,24 +248,24 @@
 
 
         <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- apps -->
-    <!-- apps -->
-    <script src="../dist/js/app-style-switcher.js"></script>
-    <script src="../dist/js/feather.min.js"></script>
-    <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../dist/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="../dist/js/custom.min.js"></script>
-    <!--This page JavaScript -->
-    <script src="../assets/extra-libs/c3/d3.min.js"></script>
-    <script src="../assets/extra-libs/c3/c3.min.js"></script>
-    <script src="../assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="../assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="../assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="../assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="../dist/js/pages/dashboards/dashboard1.min.js"></script>
+        <script src="../assets/libs/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- apps -->
+        <!-- apps -->
+        <script src="../dist/js/app-style-switcher.js"></script>
+        <script src="../dist/js/feather.min.js"></script>
+        <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <!--Custom JavaScript -->
+        <script src="../dist/js/custom.min.js"></script>
+        <!--This page JavaScript -->
+        <script src="../assets/extra-libs/c3/d3.min.js"></script>
+        <script src="../assets/extra-libs/c3/c3.min.js"></script>
+        <script src="../assets/libs/chartist/dist/chartist.min.js"></script>
+        <script src="../assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+        <script src="../assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+        <script src="../assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="../dist/js/pages/dashboards/dashboard1.min.js"></script>
 </body>
 
 </html>

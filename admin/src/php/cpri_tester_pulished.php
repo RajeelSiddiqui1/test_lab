@@ -93,39 +93,40 @@ include("header.php");
                             <input type="hidden" name="image" value="<?php echo $row['image']; ?>">
                         </div>
                     </div>
-                   
+
                     <div class="col-md-12 d-grid" style="margin-top: 20px;">
                         <button class="btn btn-info" type="submit" name="send">Submit</button>
-                    </div> 
-                   
+                    </div>
+
                     <?php
                     if (isset($_POST['send'])) {
                         $fullName = $_POST['fullName'];
                         $email = $_POST['email'];
                         $education = $_POST['education'];
                         $skills = $_POST['skills'];
-                        $work_experience = $_POST['work_experience'];
+                        $work_experience = $_POST['work_experience']; // This should be correct
                         $portfolio = $_POST['portfolio'];
                         $country = $_POST['country'];
                         $image = $_POST['image'];
                         $category_id = $row['category_id'];
 
                         // Insert into database
-                        $query = "INSERT INTO `show_tester_to_user` (`fullname`, `email`, `education`, `skills`, `work_experince`, `protfolio`, `country`, `image`, `category_id`) 
-                              VALUES ('$fullName', '$email', '$education', '$skills', '$work_experience', '$portfolio', '$country', '$image', $category_id)";
+                        $query = "INSERT INTO `cpri_show_to_user` (`fullname`, `email`, `education`, `skills`, `work_experience`, `portfolio`, `country`, `image`, `category_id`) 
+          VALUES ('$fullName', '$email', '$education', '$skills', '$work_experience', '$portfolio', '$country', '$image', $category_id)";
 
                         $result = mysqli_query($conn, $query);
 
                         if ($result) {
                             echo "<script>
-                        alert('Published');
-                        window.location.href='testerlist.php';
-                        </script>";
+            alert('Published');
+            window.location.href='cpritesterlist.php';
+            </script>";
                         } else {
                             echo "<script>alert('Error during insertion.');</script>";
                         }
                     }
                     ?>
+
 
                 </form>
 

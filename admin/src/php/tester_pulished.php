@@ -89,8 +89,7 @@ include("header.php");
                             <label for="image">Image</label><br>
                             <!-- Display the existing image -->
                             <img src="../../../images/testers/<?php echo $row['image']; ?>" alt="Tester Image" style="width: 200px; height: auto;"><br>
-                            <!-- Pass the existing image name as a hidden input -->
-                            <input type="hidden" name="image" value="<?php echo $row['image']; ?>">
+                        
                         </div>
                     </div>
                    
@@ -112,7 +111,7 @@ include("header.php");
 
                         // Insert into database
                         $query = "INSERT INTO `show_tester_to_user` (`fullname`, `email`, `education`, `skills`, `work_experince`, `protfolio`, `country`, `image`, `category_id`) 
-                              VALUES ('$fullName', '$email', '$education', '$skills', '$work_experience', '$portfolio', '$country', '$image', $category_id)";
+                              VALUES ('$fullName', '$email', '$education', '$skills', '$work_experience', '$portfolio', '$country', '$row[image]', $category_id)";
 
                         $result = mysqli_query($conn, $query);
 

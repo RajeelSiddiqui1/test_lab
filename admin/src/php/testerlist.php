@@ -44,7 +44,7 @@ include("header.php");
                                 <?php if ($is_published) { ?>
                                     <!-- If already published, show 'Published' as a disabled button -->
                                     <button class="btn btn-success" disabled>Published</button>
-                                    <a href="delete_plublished.php?d_id=<?php echo $row['id']; ?>" class="btn btn-warning mx-1">UnPublish</a>
+                                    
 
                                 <?php } else { ?>
                                     <!-- If not published, show the 'Publish' button -->
@@ -52,8 +52,6 @@ include("header.php");
 
                                 <?php } ?>
 
-                                <!-- Delete button (always shown) -->
-                                <a href="tester_delete.php?id=<?php echo $row['id'] ?>" class="btn btn-danger ">Delete</a>
                             </div>
                         </div>
                     </div>
