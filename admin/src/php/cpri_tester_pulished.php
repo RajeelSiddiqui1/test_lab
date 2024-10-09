@@ -23,7 +23,7 @@ include("header.php");
                 $getid = $_GET['id'];
 
                 $query = "SELECT t.id, t.full_name, t.email, t.education, t.skills, t.work_experience, t.portfolio_url, t.country, t.image, t.category_id, c.c_name AS category_name
-                FROM testers t
+                FROM cpr_tester t
                 INNER JOIN category c ON t.category_id = c.id
                 WHERE t.id = $getid";
                 $result = mysqli_query($conn, $query);
