@@ -25,7 +25,7 @@ include("header.php");
         <div class="col-md-4">
         
                     <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                        <img src="../../../images/show_tester_to_users/8380015.jpg" alt="" style="height:25rem;width:100%;">
+                        <img src="../../../images/testers/<?php echo $row['image']?>" alt="" style="height:25rem;width:100%;">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $row['fullname'] ?></h5>
 

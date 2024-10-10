@@ -2,49 +2,65 @@
 include("conn.php");
 session_start();
 
-if(isset($_SESSION["email"])){
-    header("location:home.php");
+if (isset($_SESSION["email"])) {
+    header("location: home.php");
     exit();
 }
 
-if(isset($_POST["login"])){
+if (isset($_POST["login"])) {
 
-    $em = $_POST['email'];
+    $em = mysqli_real_escape_string($conn, $_POST['email']);
     $pass = $_POST['password'];
 
     $query = "SELECT * FROM `users` WHERE `email`='$em'";
     $result = mysqli_query($conn, $query);
 
-    if(mysqli_num_rows($result) > 0){
+    if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
-        if(password_verify($pass, $row["password"])){
-            $_SESSION["id"] = $row["id"];
-            $_SESSION["full_name"] = $row["full_name"];
-            $_SESSION["department"] = $row["department"];
-            $_SESSION["contact_number"] = $row["contact_number"];
-            $_SESSION["country"] = $row["country"];
-            $_SESSION["created_at"] = $row["created_at"];
-            $_SESSION["updated_at"] = $row["updated_at"];
-            $_SESSION["email"] = $row["email"];
-            $_SESSION["password"] = $row["password"];
-            $_SESSION["image"] = $row["image"];
-           
-            echo "<script>
-                alert('Login Successful!');
-                window.location.href = 'home.php'; 
-            </script>";
+        $status = $row['status'];
+
+        // Check if the account is approved
+        if ($status == "approved") {
+            // Verify password
+            if (password_verify($pass, $row["password"])) {
+                // Set session variables
+                $_SESSION["id"] = $row["id"];
+                $_SESSION["full_name"] = $row["full_name"];
+                $_SESSION["department"] = $row["department"];
+                $_SESSION["contact_number"] = $row["contact_number"];
+                $_SESSION["country"] = $row["country"];
+                $_SESSION["created_at"] = $row["created_at"];
+                $_SESSION["updated_at"] = $row["updated_at"];
+                $_SESSION["email"] = $row["email"];
+                $_SESSION["image"] = $row["image"];
+                $_SESSION["billing_address"] = $row["billing_address"];
+                $_SESSION["total_price"] = $row["total_price"]; // Optional cart info
+
+                echo "<script>
+                        alert('Login Successful');
+                        window.location.href = 'home.php'; 
+                    </script>";
+            } else {
+                echo "<script>
+                        alert('Invalid email or password. Please try again.');
+                      </script>";
+            }
         } else {
+            // If account status is not approved
             echo "<script>
-                alert('Error: Invalid email or password. Please try again.');
-            </script>";
+                    alert('Your account is still pending for approval. Please wait until it is approved.');
+                    window.location.href = 'login.php'; 
+                  </script>";
         }
     } else {
         echo "<script>
-            alert('Error: Invalid email or password. Please try again.');
-        </script>";
+                alert('Invalid email or password. Please try again.');
+              </script>";
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

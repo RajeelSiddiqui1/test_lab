@@ -197,6 +197,13 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="user_res.php" aria-expanded="false">
+                                <i data-feather="user-check" class="feather-icon"></i>
+                                <span class="hide-menu">User Login Res</span>
+                            </a>
+                        </li>
+
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">User Lists</span></li>
 
@@ -231,10 +238,27 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
+                        <li class="sidebar-item ">
                             <a class="sidebar-link sidebar-link" href="Published_cpri_tester.php" aria-expanded="false">
                                 <i data-feather="check-circle" class="feather-icon"></i>
                                 <span class="hide-menu">Published CPRI Tester</span>
+                            </a>
+                        </li>
+
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Tests Lists</span></li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="tester_res_user.php" aria-expanded="false">
+                                <i data-feather="check-circle" class="feather-icon"></i>
+                                <span class="hide-menu">Tester List</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="cpritester_res_user.php" aria-expanded="false">
+                                <i data-feather="check-circle" class="feather-icon"></i>
+                                <span class="hide-menu"> CPRI Tester List</span>
                             </a>
                         </li>
                     </ul>

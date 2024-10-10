@@ -97,36 +97,46 @@ include("header.php");
                     <div class="col-md-12 d-grid" style="margin-top: 20px;">
                         <button class="btn btn-info" type="submit" name="send">Submit</button>
                     </div>
-
                     <?php
                     if (isset($_POST['send'])) {
                         $fullName = $_POST['fullName'];
                         $email = $_POST['email'];
                         $education = $_POST['education'];
                         $skills = $_POST['skills'];
-                        $work_experience = $_POST['work_experience']; // This should be correct
+                        $work_experience = $_POST['work_experience'];
                         $portfolio = $_POST['portfolio'];
                         $country = $_POST['country'];
                         $image = $_POST['image'];
                         $category_id = $row['category_id'];
 
-                        // Insert into database
+                        // Remove "http://" or "https://" from portfolio URL and image
+                        $portfolio_url_without_http = preg_replace('#^https?://#', '', $portfolio);
+                        $image_without_http = preg_replace('#^https?://#', '', $image);
+
+                        // Insert into the first table (e.g., cpri_show_to_user)
                         $query = "INSERT INTO `cpri_show_to_user` (`fullname`, `email`, `education`, `skills`, `work_experience`, `portfolio`, `country`, `image`, `category_id`) 
-          VALUES ('$fullName', '$email', '$education', '$skills', '$work_experience', '$portfolio', '$country', '$image', $category_id)";
+              VALUES ('$fullName', '$email', '$education', '$skills', '$work_experience', '$portfolio_url_without_http', '$country', '$image_without_http', $category_id)";
 
                         $result = mysqli_query($conn, $query);
 
                         if ($result) {
-                            echo "<script>
-            alert('Published');
-            window.location.href='cpritesterlist.php';
-            </script>";
+                            // Optionally, insert the same image URL into another table (you can adapt this query)
+                            $query2 = "INSERT INTO `another_table` (`image_link`) VALUES ('$image_without_http')";
+                            $result2 = mysqli_query($conn, $query2);
+
+                            if ($result2) {
+                                echo "<script>
+                    alert('Published');
+                    window.location.href='cpritesterlist.php';
+                  </script>";
+                            } else {
+                                echo "<script>alert('Error during the second insertion.');</script>";
+                            }
                         } else {
                             echo "<script>alert('Error during insertion.');</script>";
                         }
                     }
                     ?>
-
 
                 </form>
 
