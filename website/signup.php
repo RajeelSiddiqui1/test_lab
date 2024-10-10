@@ -2,35 +2,86 @@
 include("conn.php");
 
 if (isset($_POST["signup"])) {
+    // Sign-up form data
     $na = $_POST["fullName"];
     $em = $_POST["email"];
     $department = $_POST["department"];
     $con = $_POST["contact"];
+    $website_link = $_POST["website_link"];
     $coun = $_POST["country"];
     $pass = $_POST["password"];
     $cpass = $_POST["cpassword"];
-
     $hash_password = password_hash($pass, PASSWORD_DEFAULT);
+    $contact_pattern = "/^\+?[0-9]{10,14}$/";
 
-    $CheckQuery = "SELECT * FROM `users` WHERE `full_name`='$na' AND `email`='$em' AND `department`='$department' AND `contact_number`='$con'";
-    $CheckResult = mysqli_query($conn, $CheckQuery);
-    if (mysqli_num_rows($CheckResult) == 0) {
-        if ($pass == $cpass) {
-            $query = "INSERT INTO `users`(`full_name`, `email`, `password`, `department`, `country`, `contact_number`) 
-            VALUES ('$na','$em','$hash_password','$department','$coun','$con')";
-            $result = mysqli_query($conn, $query);
-            if ($result) {
-                echo "<script>alert('Registration Successful');
-                window.location.href='login.php';
-                </script>";
+    // Payment form data
+    $cardName = $_POST['cardName'];
+    $cardNumber = $_POST['cardNumber'];
+    $expiryDate = $_POST['expiryDate'];
+    $cvv = $_POST['cvv'];
+    $billingAddress = $_POST['billingAddress'];
+    $totalprice = 5000; // Fixed price for demonstration
+
+    // Regex patterns for payment details
+    $namePattern = "/^[a-zA-Z\s]+$/";
+    $cardNumberPattern = "/^\d{4} \d{4} \d{4} \d{4}$/";
+    $expiryDatePattern = "/^(0[1-9]|1[0-2])\/\d{2}$/";
+    $cvvPattern = "/^\d{3}$/";
+
+    $isValid = true;
+
+    // Validate contact number format
+    if (!preg_match($contact_pattern, $con)) {
+        echo "<script>alert('Invalid contact number format.')</script>";
+        $isValid = false;
+    }
+
+    // Payment validation
+    if (!preg_match($namePattern, $cardName)) {
+        echo "<script>alert('Invalid cardholder name. Only letters and spaces are allowed.');</script>";
+        $isValid = false;
+    }
+
+    if (!preg_match($cardNumberPattern, $cardNumber)) {
+        echo "<script>alert('Invalid card number format.');</script>";
+        $isValid = false;
+    }
+
+    if (!preg_match($expiryDatePattern, $expiryDate)) {
+        echo "<script>alert('Invalid expiry date format. Use MM/YY.');</script>";
+        $isValid = false;
+    }
+
+    if (!preg_match($cvvPattern, $cvv)) {
+        echo "<script>alert('Invalid CVV format. It should be 3 digits.');</script>";
+        $isValid = false;
+    }
+
+    // Proceed with signup and cart insertion if all is valid
+    if ($isValid) {
+        // Check if the user already exists
+        $CheckQuery = "SELECT * FROM `users` WHERE `email`='$em'";
+        $CheckResult = mysqli_query($conn, $CheckQuery);
+
+        if (mysqli_num_rows($CheckResult) == 0) {
+            if ($pass == $cpass) {
+                // Insert payment info into the users table
+                $paymentQuery = "INSERT INTO `users`(`full_name`, `email`, `password`, `department`, `country`, `contact_number`, `website_link`, `cardholder_name`, `card_number`, `expiry_date`, `cvv`, `billing_address`, `total_price`) 
+                VALUES ('$na','$em','$hash_password','$department','$coun','$con','$website_link','$cardName','$cardNumber','$expiryDate','$cvv','$billingAddress','$totalprice')";
+
+                $result = mysqli_query($conn, $paymentQuery);
+
+                if ($result) {
+                    echo "<script>alert('Registration and payment completed successfully'); window.location.href='login.php';</script>";
+                } else {
+                    echo "<script>alert('Error during registration/payment.')</script>";
+                }
             } else {
-                echo "<script>alert('Error during registration')</script>";
+                echo "<script>alert('Passwords do not match.')</script>";
             }
         } else {
-            echo "<script>alert('Passwords do not match')</script>";
+            echo "<script>alert('User already exists.')</script>";
         }
-    } else {
-        echo "<script>alert('User already exists')</script>";
     }
 }
 ?>
@@ -40,11 +91,9 @@ if (isset($_POST["signup"])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registration Form</title>
-    <!-- Bootstrap 5.3 CSS -->
+    <title>Sign Up & Add to Cart</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             background-color: #121212;
@@ -53,7 +102,7 @@ if (isset($_POST["signup"])) {
             display: flex;
             justify-content: center;
             align-items: center;
-            /* height: 100vh; */
+            min-height: 100vh;
         }
 
         .card-registration {
@@ -82,251 +131,104 @@ if (isset($_POST["signup"])) {
             box-shadow: none;
         }
 
-        .btn-primary,
-        .btn-secondary {
+        .btn-primary {
             background-color: #ff69b4;
             border: none;
-            padding: 10px;
-            font-weight: 600;
         }
 
-        .btn-primary:hover,
-        .btn-secondary:hover {
+        .btn-primary:hover {
             background-color: #ff3399;
-        }
-
-        .step-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #ff69b4;
         }
 
         label {
             color: #ccc;
         }
-
-        .error-message {
-            color: red;
-            font-size: 0.875rem;
-        }
-
-        .step {
-            display: none;
-        }
-
-        .step.active {
-            display: block;
-        }
-
-        a {
-            color: #ff69b4;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #ff3399;
-        }
-
-        @media (max-width: 576px) {
-            .col-md-6 {
-                max-width: 100%;
-            }
-        }
-
-        .position-relative {
-            position: relative;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 75%;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-
-        .form-control {
-            padding-right: 40px;
-            /* Space for the icon */
-        }
     </style>
 </head>
 
 <body>
-    <div class="container ">
+    <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-md-5 mb-4 mt-2">
+            <div class="col-md-6">
                 <div class="card card-registration">
-                    <div class="card-body ">
-                        <h3>Sign Up</h3>
-                        <form id="registrationForm" method="POST" enctype="multipart/form-data" novalidate>
-
-                            <!-- Step 1: Personal Information -->
-                            <div class="step active" id="step1">
-                                <div class="step-title">Step 1: Personal Information</div>
-                                <div class="mb-3">
-                                    <label for="fullName" class="form-label">Full Name</label>
-                                    <input type="text" id="fullName" class="form-control" name="fullName" required>
-                                    <div class="error-message" id="nameError"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" id="email" class="form-control" name="email" required>
-                                    <div class="error-message" id="emailError"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="department" class="form-label">Department</label>
-                                    <input type="text" id="department" class="form-control" name="department" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="contact" class="form-label">Contact Number</label>
-                                    <input type="tel" id="contact" class="form-control" name="contact" required>
-                                    <div class="error-message" id="contactError"></div>
-                                </div>
-
-                                <div class="mt-4 d-grid">
-                                    <button type="button" class="btn btn-primary btn-lg" id="nextStep">Next</button>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <a href="login.php">Already have an account? Login</a>
-                                </div>
+                    <div class="card-body">
+                        <h3>Sign Up </h3>
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" name="fullName" required>
                             </div>
-
-                            <!-- Step 2: Account Information -->
-                            <div class="step" id="step2">
-                                <div class="step-title">Step 2: Account Information</div>
-                                <div class="mb-3">
-                                    <label for="country" class="form-label">Select Country</label>
-                                    <select class="form-control" id="country" name="country" required>
-                                        <option value="" disabled selected>Select your country</option>
-                                        <option value="Pakistan">Pakistan</option>
-                                        <option value="United States">United States</option>
-                                        <option value="Canada">Canada</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="Germany">Germany</option>
-                                        <option value="France">France</option>
-                                        <option value="Japan">Japan</option>
-                                        <option value="China">China</option>
-                                        <option value="India">India</option>
-                                        <option value="Brazil">Brazil</option>
-                                        <option value="South Korea">South Korea</option>
-                                        <option value="Italy">Italy</option>
-                                        <option value="Russia">Russia</option>
-                                        <option value="Mexico">Mexico</option>
-                                        <option value="Spain">Spain</option>
-                                        <option value="Netherlands">Netherlands</option>
-                                        <option value="Switzerland">Switzerland</option>
-                                        <option value="Sweden">Sweden</option>
-                                        <option value="Argentina">Argentina</option>
-                                        <option value="Turkey">Turkey</option>
-                                        <option value="Saudi Arabia">Saudi Arabia</option>
-                                        <option value="South Africa">South Africa</option>
-                                        <option value="Singapore">Singapore</option>
-                                        <option value="Malaysia">Malaysia</option>
-                                        <option value="Indonesia">Indonesia</option>
-                                        <option value="Thailand">Thailand</option>
-                                        <option value="New Zealand">New Zealand</option>
-                                        <option value="Norway">Norway</option>
-                                        <option value="Belgium">Belgium</option>
-                                        <option value="Denmark">Denmark</option>
-                                        <option value="Austria">Austria</option>
-                                        <option value="Finland">Finland</option>
-                                        <option value="Ireland">Ireland</option>
-                                        <option value="Israel">Israel</option>
-                                        <option value="Poland">Poland</option>
-                                        <option value="Czech Republic">Czech Republic</option>
-                                        <option value="Portugal">Portugal</option>
-                                        <option value="Chile">Chile</option>
-                                        <option value="Colombia">Colombia</option>
-                                        <option value="Greece">Greece</option>
-                                        <option value="Philippines">Philippines</option>
-                                        <option value="Egypt">Egypt</option>
-                                        <option value="Vietnam">Vietnam</option>
-                                        <option value="Nigeria">Nigeria</option>
-                                        <option value="Bangladesh">Bangladesh</option>
-                                        <option value="Hungary">Hungary</option>
-                                        <option value="Ukraine">Ukraine</option>
-                                        <option value="Peru">Peru</option>
-                                        <option value="Romania">Romania</option>
-                                        <option value="Venezuela">Venezuela</option>
-                                    </select>
-                                    <div class="error-message" id="countryError"></div>
-                                </div>
-                                <div class="mb-3 position-relative">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="department" class="form-label">Department</label>
+                                <input type="text" class="form-control" name="department" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact" class="form-label">Contact Number</label>
+                                <input type="text" class="form-control" name="contact" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="website_link" class="form-label">Website Link</label>
+                                <input type="text" class="form-control" name="website_link">
+                            </div>
+                            <div class="mb-3">
+                                <label for="country" class="form-label">Country</label>
+                                <input type="text" class="form-control" name="country" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" id="password" class="form-control" name="password" required>
-                                    <span class="toggle-password" onclick="togglePassword('password', 'toggleIconPassword')" style="color: #ff69b4;">
-                                        <i class="fas fa-eye" id="toggleIconPassword"></i>
-                                    </span>
-                                    <div class="error-message" id="passwordError"></div>
+                                    <input type="password" class="form-control" name="password" required>
                                 </div>
-
-                                <div class="mb-3 position-relative">
+                                <div class="col-md-6 mb-3">
                                     <label for="cpassword" class="form-label">Confirm Password</label>
-                                    <input type="password" id="cpassword" class="form-control" name="cpassword" required>
-                                    <span class="toggle-password" onclick="togglePassword('cpassword', 'toggleIconCPassword')" style="color: #ff69b4;">
-                                        <i class="fas fa-eye" id="toggleIconCPassword"></i>
-                                    </span>
-                                    <div class="error-message" id="cpasswordError"></div>
-                                </div>
-
-
-                                <div class="mt-4 d-grid">
-                                    <button type="button" class="btn btn-secondary btn-lg" id="prevStep">Back</button>
-                                    <button type="submit" class="btn btn-primary btn-lg my-2" name="signup">Submit</button>
-                                </div>
-
-                                <div class="text-center mt-3">
-                                    <a href="login.php">Already have an account? Login</a>
+                                    <input type="password" class="form-control" name="cpassword" required>
                                 </div>
                             </div>
 
+                            <h3 class="text-center mt-4">Add to Cart (Payment Details)</h3>
+                            <div class="mb-3">
+                                <label for="cardName" class="form-label">Cardholder Name</label>
+                                <input type="text" class="form-control" name="cardName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cardNumber" class="form-label">Card Number</label>
+                                <input type="text" class="form-control" name="cardNumber" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="expiryDate" class="form-label">Expiry Date (MM/YY)</label>
+                                    <input type="text" class="form-control" name="expiryDate" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" name="cvv" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="billingAddress" class="form-label">Billing Address</label>
+                                <input type="text" class="form-control" name="billingAddress" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="billingAddress" class="form-label">Total Payment</label>
+                                <input type="text" class="form-control" value="$5000" readonly>
+                            </div>
+
+                            <button type="submit" name="signup" class="btn btn-primary w-100">Complete Signup & Payment</button>
+                            <div class="mt-3">
+                                <a href="login.php" class="mx-5 text-light" style="text-decoration:none;">Do have an account?login</a>
+                                <a href="choose_Password.php" class="mx-3 text-light" style="text-decoration:none;">Choose password</a>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        const nextStepBtn = document.getElementById('nextStep');
-        const prevStepBtn = document.getElementById('prevStep');
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-
-        nextStepBtn.addEventListener('click', function() {
-            step1.classList.remove('active');
-            step2.classList.add('active');
-        });
-
-        prevStepBtn.addEventListener('click', function() {
-            step2.classList.remove('active');
-            step1.classList.add('active');
-        });
-
-        function togglePassword(inputId, iconId) {
-            const passwordInput = document.getElementById(inputId);
-            const toggleIcon = document.getElementById(iconId);
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-    </script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

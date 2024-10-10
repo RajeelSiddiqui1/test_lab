@@ -167,8 +167,8 @@
     <h1 class="animate__animated animate__fadeInUp">Welcome to SRS Electrical Appliances</h1>
     <p class="animate__animated animate__fadeInUp tagline">Crafting the Future of Electrical Products</p>
     <p class="lead">We have a network in more than <strong>50 countries</strong> worldwide!</p>
-    <a href="login.php" class="btn btn-custom animate__animated animate__fadeInUp">Login</a>
-    <a href="signup.php" class="btn btn-outline-light btn-lg ms-3 animate__animated animate__fadeInUp">Signup</a>
+    <a href="#user-options" class="btn btn-custom animate__animated animate__fadeInUp">Signup</a>
+    <!-- <a href="signup.php" class="btn btn-outline-light btn-lg ms-3 animate__animated animate__fadeInUp">Signup</a> -->
   </div>
 </section>
 
@@ -202,6 +202,34 @@
   </div>
 </section>
 
+<div id="user-options" class="container hidden-div">
+  <div class="row">
+    <div class="col-md-4">
+      <a href="add_tocart.php" style="text-decoration:none;">
+      <div class="process-card">
+        <i class="fas fa-user process-icon"></i>
+        <h4>User</h4>
+        <p>Standard users who can browse and purchase from our product catalog.</p>
+      </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <div class="process-card">
+        <i class="fas fa-flask process-icon"></i>
+        <h4>Tester</h4>
+        <p>Testers ensure that all our electrical appliances meet safety standards.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="process-card">
+        <i class="fas fa-check-double process-icon"></i>
+        <h4>CPRI Tester</h4>
+        <p>Certified testers responsible for approving CPRI standard products.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer>
   <p>&copy; 2024 SRS Electrical Appliances | All Rights Reserved</p>
@@ -212,5 +240,12 @@
 <!-- FontAwesome JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 
+<script>
+  document.getElementById('signup-btn').addEventListener('click', function() {
+    var userOptions = document.getElementById('user-options');
+    userOptions.style.display = 'block';
+    userOptions.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
 </body>
 </html>
