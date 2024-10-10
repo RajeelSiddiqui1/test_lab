@@ -57,7 +57,7 @@
                         <a href="index.php">
                             <b class="logo-icon">
                                 <!-- Dark Logo icon -->
-                                <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                                <!-- <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" /> -->
                                 <!-- Light Logo icon -->
                                 <img src="../assets/images/logo-icon.png" alt="homepage" class="light-logo" />
                             </b>
