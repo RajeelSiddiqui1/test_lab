@@ -15,6 +15,26 @@ include("header.php");
 
 <div class="page-wrapper px-3">
 
+<div class="container my-3">
+        <div class="row">
+            <div class="col-12">
+            <form method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="text" id="search-bar" name="search" class="form-control" placeholder="Search......">
+               
+            </div>
+        </form>
+            </div>
+        
+        </div>
+    </div>
+  
+
+    <!-- Area where search results will be displayed -->
+    <div class="container" id="search-results">
+        <!-- Results will be appended here dynamically via AJAX -->
+    </div>
+
 <div class="container my-5">
 <div class="row ">
 <h2 class="">Category Deatils</h2>
@@ -57,3 +77,25 @@ include("header.php");
 </div>
 
 </div>
+
+<script>
+     $(document).ready(function() {
+        $('#search-bar').keyup(function() {
+            let searchQuery = $(this).val(); // Get the search term
+
+            if (searchQuery.length > 0) {
+                $.ajax({
+                    url: 'live/category_details.php', // Updated path to the PHP file in the 'live' folder
+                    method: 'POST',
+                    data: { search: searchQuery },
+                    success: function(data) {
+                        $('#search-results').html(data); // Display the returned results
+                    }
+                });
+            } else {
+                $('#search-results').html(''); // Clear the results if search input is empty
+            }
+        });
+    });
+
+</script>

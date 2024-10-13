@@ -38,7 +38,7 @@ include("header.php");
             $result = mysqli_query($conn, $query);
             while ($row = mysqli_fetch_assoc($result)) {
                 $tester_full_name = $row['full_name'];
-                $check_query = "SELECT * FROM `cpri_show_to_user` WHERE `fullname` = '$tester_full_name'";
+                $check_query = "SELECT * FROM `show_tester_to_user` WHERE `fullname` = '$tester_full_name'";
                 $check_result = mysqli_query($conn, $check_query);
                 $is_published = mysqli_num_rows($check_result) > 0;
             ?>

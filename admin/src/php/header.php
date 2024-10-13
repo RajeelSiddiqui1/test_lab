@@ -55,20 +55,15 @@
                     <div class="navbar-brand">
                         <!-- Logo icon -->
                         <a href="index.php">
-                            <b class="logo-icon">
+                            <b class="logo-icon d-flex">
                                 <!-- Dark Logo icon -->
-                                <!-- <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" /> -->
+                                 <img src="../assets/images/logo.png" alt="homepage"  height="60"/> 
                                 <!-- Light Logo icon -->
-                                <img src="../assets/images/logo-icon.png" alt="homepage" class="light-logo" />
+                               <h2 style="font-size:3rem;font-weight:800;" class="mt-1 mx-1">Admin</h2>
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
-                            <span class="logo-text">
-                                <!-- dark Logo text -->
-                                <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                                <!-- Light Logo text -->
-                                <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
-                            </span>
+                            
                         </a>
                     </div>
                     <!-- ============================================================== -->
