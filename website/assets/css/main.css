@@ -1182,6 +1182,9 @@ section,
   line-height: 24px;
   font-size: 14px;
   margin-bottom: 0;
+  color: #000; 
+  transition: color 0.3s ease-in-out; 
+  
 }
 
 .services .service-item:hover {
@@ -1203,8 +1206,9 @@ section,
 
 .services .service-item:hover h3,
 .services .service-item:hover p {
-  color: var(--contrast-color);
+  color: var(--contrast-color); /* Text color changes on hover */
 }
+
 
 /*--------------------------------------------------------------
 # Appointment Section

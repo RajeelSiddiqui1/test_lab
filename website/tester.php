@@ -11,6 +11,10 @@ if (!isset($_SESSION["email"])) {
 <?php include("header.php"); ?>
 
 <main class="main">
+
+
+    
+
   <section id="tester" class="doctors section">
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
@@ -18,7 +22,24 @@ if (!isset($_SESSION["email"])) {
       <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
     </div>
 
-    <div class="container">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+            <form method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="text" id="search-bar" name="search" class="form-control" placeholder="Search for testers">
+            </div>
+        </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Area where search results will be displayed -->
+    <div class="container" id="search-results">
+        <!-- Results will be appended here dynamically via AJAX -->
+    </div>
+
+    <div class="container mt-3">
       <div class="row gy-4">
         <?php
         $query = "
@@ -33,7 +54,7 @@ if (!isset($_SESSION["email"])) {
 
         // Display the testers' details if records are found
         while ($row = mysqli_fetch_assoc($result)) { ?>
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-6 mt-3" data-aos="fade-up" data-aos-delay="100">
             <div class="team-member d-flex align-items-start">
               <div class="pic">
                 <img src="../images/testers/<?php echo $row['image']; ?>" height="150" width="100%" alt="Tester Image">
@@ -49,8 +70,8 @@ if (!isset($_SESSION["email"])) {
                   data-email="<?php echo $row['email']; ?>"
                   data-education="<?php echo $row['education']; ?>"
                   data-skills="<?php echo $row['skills']; ?>"
-                  data-work_experience="<?php echo $row['work_experince']; ?>"
-                  data-portfolio="<?php echo $row['protfolio']; ?>"
+                  data-work_experince="<?php echo $row['work_experince']; ?>"
+                  data-protfolio="<?php echo $row['protfolio']; ?>"
                   data-country="<?php echo $row['country']; ?>"
                   data-image="<?php echo $row['image']; ?>"
                 >
@@ -82,7 +103,7 @@ if (!isset($_SESSION["email"])) {
             <p><strong class="text-black">Education:</strong> <span id="testerEducation" class="text-black"></span></p> 
             <p><strong class="text-black">Skills:</strong> <span id="testerSkills" class="text-black"></span></p> 
             <p><strong class="text-black">Work Experience:</strong> <span id="testerWorkExperience" class="text-black"></span></p> 
-            <p><strong class="text-black">Portfolio:</strong> <a href="#" target="_blank" id="testerPortfolio" class="text-black">View Portfolio</a></p> 
+            <p><strong class="text-black">protfolio:</strong> <a href="#" target="_blank" id="testerprotfolio" class="text-black">View protfolio</a></p> 
             <p><strong class="text-black">Country:</strong> <span id="testerCountry" class="text-black"></span></p> 
           </div>
         </div>
@@ -94,9 +115,7 @@ if (!isset($_SESSION["email"])) {
   </div>
 </div>
 
-
 <script>
-// Populate the modal with data when triggered
 document.addEventListener('DOMContentLoaded', function() {
   var testerModal = document.getElementById('testerModal');
   testerModal.addEventListener('show.bs.modal', function(event) {
@@ -105,8 +124,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var email = button.getAttribute('data-email');
     var education = button.getAttribute('data-education');
     var skills = button.getAttribute('data-skills');
-    var workExperience = button.getAttribute('data-work_experience');
-    var portfolio = button.getAttribute('data-portfolio');
+    var workExperience = button.getAttribute('data-work_experince');
+    var protfolio = button.getAttribute('data-protfolio');
     var country = button.getAttribute('data-country');
     var image = button.getAttribute('data-image');
 
@@ -116,10 +135,29 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('testerEducation').textContent = education;
     document.getElementById('testerSkills').textContent = skills;
     document.getElementById('testerWorkExperience').textContent = workExperience;
-    document.getElementById('testerPortfolio').setAttribute('href', portfolio);
+    document.getElementById('testerprotfolio').setAttribute('href', protfolio);
     document.getElementById('testerCountry').textContent = country;
     document.getElementById('testerImage').setAttribute('src', '../images/testers/' + image);
   });
+});
+
+$(document).ready(function() {
+    $('#search-bar').keyup(function() {
+        let searchQuery = $(this).val(); // Get the search term
+
+        if (searchQuery.length > 0) {
+            $.ajax({
+                url: 'live/tester.php',
+                method: 'POST',
+                data: { search: searchQuery },
+                success: function(data) {
+                    $('#search-results').html(data); 
+                }
+            });
+        } else {
+            $('#search-results').html(''); 
+        }
+    });
 });
 </script>
 
