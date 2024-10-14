@@ -55,20 +55,20 @@ include("header.php");
                             <td>{$row['product_id']}</td>
                             <td>{$row['test_id']}</td>
                             <td>{$row['product_name']}</td>
-                            <td>{$row['product_description']}</td>
+                            <td>" . substr($row['product_description'], 0, 60) . ".....</td>
                             <td>{$row['product_quantity']}</td>
                             <td>\${$row['product_price']}</td>
                             <td>{$row['c_name']}</td>
                             <td><img src='../../images/products/{$row['product_image']}' alt='{$row['product_name']}' height='100' width='150'></td>
                             <td>{$row['status']}</td>
                            <td><a href='res_message.php?id={$row['product_id']}' class='btn btn-info'>Action</a></td>
-
                           </tr>";
                 }
               } else {
                 echo "<tr><td colspan='10' class='text-center'>No products found.</td></tr>";
               }
               ?>
+
             </tbody>
           </table>
         </div>
@@ -77,30 +77,30 @@ include("header.php");
   </div>
 
   <div class="fixed-plugin">
-  <div class="dropdown show-dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-cog fa-2x"> </i>
-    </a>
-    <ul class="dropdown-menu">
-      <li class="header-title"> Sidebar Background</li>
-      <li class="adjustments-line">
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors text-center">
-            <span class="badge filter badge-primary active" data-color="primary"></span>
-            <span class="badge filter badge-info" data-color="blue"></span>
-            <span class="badge filter badge-success" data-color="green"></span>
-          </div>
-          <div class="clearfix"></div>
-        </a>
-      </li>
-      <li class="adjustments-line text-center color-change">
-        <span class="color-label">LIGHT MODE</span>
-        <span class="badge light-badge mr-2"></span>
-        <span class="badge dark-badge ml-2"></span>
-        <span class="color-label">DARK MODE</span>
-      </li>
-     
-    </ul>
+    <div class="dropdown show-dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-cog fa-2x"> </i>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="header-title"> Sidebar Background</li>
+        <li class="adjustments-line">
+          <a href="javascript:void(0)" class="switch-trigger background-color">
+            <div class="badge-colors text-center">
+              <span class="badge filter badge-primary active" data-color="primary"></span>
+              <span class="badge filter badge-info" data-color="blue"></span>
+              <span class="badge filter badge-success" data-color="green"></span>
+            </div>
+            <div class="clearfix"></div>
+          </a>
+        </li>
+        <li class="adjustments-line text-center color-change">
+          <span class="color-label">LIGHT MODE</span>
+          <span class="badge light-badge mr-2"></span>
+          <span class="badge dark-badge ml-2"></span>
+          <span class="color-label">DARK MODE</span>
+        </li>
+
+      </ul>
+    </div>
   </div>
-</div>
 </div>

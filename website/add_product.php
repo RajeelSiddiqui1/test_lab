@@ -21,7 +21,7 @@ include("header.php");
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" id="productForm">
                 <div class="mb-4">
                     <label for="id">Product ID (10 digits):</label>
                     <input type="text" id="id" class="form-control" name="id" required pattern="\d{10}" title="Please enter a 10-digit ID">
@@ -58,10 +58,17 @@ include("header.php");
                     <input type="file" id="product_image" class="form-control" name="product_image" required>
                 </div>
                 <div class="d-grid">
-                    <button class="btn btn-danger" name="submit">Submit</button>
+                    <button class="btn" id="submitBtn" name="submit">Submit</button>
                 </div>
             </form>
         </div>
+    </div>
+</div>
+
+<div id="animationOverlay" class="overlay">
+    <div class="animation-box">
+        <img src="./assets/img/waiting logo.jpg" alt="Submitting..."  class="img-fluid"/>
+        <p>Product submitted to SRS Electrical! Waiting for tester...</p>
     </div>
 </div>
 
@@ -98,8 +105,11 @@ if (isset($_POST["submit"])) {
     $result = mysqli_query($conn, $query);
     if ($result) {
         echo "<script>
-                alert('Product has been sent to the tester...');
-                window.location.href='add_product.php';
+                document.getElementById('animationOverlay').style.display = 'flex';
+                setTimeout(function() {
+                    alert('Product has been sent to the tester...');
+                    window.location.href='add_product.php';
+                }, 5000);
               </script>";
     } else {
         echo "<script>alert('Something went wrong!');</script>";
@@ -110,3 +120,44 @@ if (isset($_POST["submit"])) {
 <?php
 include("footer.php");
 ?>
+
+<!-- CSS for styling -->
+<style>
+    .btn {
+        background-color: #FD70B6;
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    .animation-box {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .animation-box img {
+        width: 150px;
+        margin-bottom: 1rem;
+    }
+
+    .animation-box p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+    }
+</style>
