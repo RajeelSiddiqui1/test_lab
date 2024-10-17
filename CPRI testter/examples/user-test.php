@@ -24,7 +24,7 @@ include("header.php");
           <table class="table table-bordered table-striped">
             <thead class="table-dark">
               <tr>
-                <th>Product ID</th>
+                <!-- <th>Product ID</th> -->
                 <th>Test ID</th>
                 <th>Product Name</th>
                 <th>Description</th>
@@ -38,29 +38,31 @@ include("header.php");
             </thead>
             <tbody>
             <?php
-// Adjust the query to show products from categories the tester has visited
+
 $query = "
   SELECT p.id AS id, p.test_id, p.product_name, p.product_description, p.product_quantity, 
          p.product_price, c.c_name, p.product_image, p.status, p.category_id 
   FROM cpri_product p
   INNER JOIN category c ON p.category_id = c.id
-  INNER JOIN testers ta ON ta.category_id = c.id
+  INNER JOIN cpr_tester ta ON ta.category_id = c.id
   WHERE ta.id = '$id'
 ";
 $result = mysqli_query($conn, $query);
 
+
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) { ?>
         <tr>
-                <td><?php echo $row['id']?></td>
+                <!-- <td><?php echo $row['id']?></td> -->
                 <td><?php echo $row['test_id']?></td>
                 <td><?php echo $row['product_name']?> </td>
-                <td><?php echo $row['product_description']?> </td>
+                <td><?php echo substr($row['product_description'],0,120),'...'?> </td>
                 <td><?php echo $row['product_quantity']?> </td>
                 <td>$<?php echo $row['product_price']?> </td>
                 <td><?php echo $row['c_name']?></td>
                 <td><img src="../../images/products/<?php echo $row['product_image']?>" alt="" height='50' width='150'></td>
                 <td><?php echo $row['status']?></td>
+                <!-- <td><?php echo $row['status2']?></td> -->
                <td><a href='res_message.php?id=<?php echo $row['id']; ?>' class='btn btn-info'>Action</a></td>
 
               </tr>

@@ -24,15 +24,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_query($conn, $update_query);
         echo "<div class='alert alert-warning'>Product status updated to declined.</div>";
     } else if ($status == 'approved') {
-        $insert_query = "INSERT INTO cpri_product (test_id, product_name, product_description, product_quantity, product_image, product_price, message, category_id, user_id, status)
-                         VALUES ('{$row['test_id']}', '{$row['product_name']}', '{$row['product_description']}', '{$row['product_quantity']}', '{$row['product_image']}', '{$row['product_price']}', '$message', '{$row['category_id']}', '{$row['user_id']}', '$status')";
+        // Include the product_id column in the insert query
+        $insert_query = "INSERT INTO cpri_product (product_id, test_id, product_name, product_description, product_quantity, product_image, product_price, message, category_id, user_id, status)
+                         VALUES ('{$row['id']}', '{$row['test_id']}', '{$row['product_name']}', '{$row['product_description']}', '{$row['product_quantity']}', '{$row['product_image']}', '{$row['product_price']}', '$message', '{$row['category_id']}', '{$row['user_id']}', '$status')";
         mysqli_query($conn, $insert_query);
-
+    
         // Update status in tbl_products
         $update_query = "UPDATE tbl_products SET status = '$status', message = '$message' WHERE id = '$get'";
         mysqli_query($conn, $update_query);
         echo "<div class='alert alert-success'>Product approved and inserted into cpri_product table.</div>";
     }
+    
 }
 ?>
 
