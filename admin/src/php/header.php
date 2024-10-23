@@ -57,13 +57,13 @@
                         <a href="index.php">
                             <b class="logo-icon d-flex">
                                 <!-- Dark Logo icon -->
-                                 <img src="../assets/images/logo.png" alt="homepage"  height="60"/> 
+                                <img src="../assets/images/logo.png" alt="homepage" height="30" />
                                 <!-- Light Logo icon -->
-                               <h2 style="font-size:3rem;font-weight:800;" class="mt-1 mx-1">Admin</h2>
+                                <h2 style="font-size:2rem;font-weight:800;" class="mt-1 mx-1">Admin</h2>
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
-                            
+
                         </a>
                     </div>
                     <!-- ============================================================== -->
@@ -85,10 +85,7 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
-                        <!-- Notification -->
-                        <li class="nav-item dropdown">
 
-                        </li>
                         <!-- End Notification -->
                         <!-- ============================================================== -->
                         <!-- create new -->
@@ -105,17 +102,19 @@
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class="nav-item d-none d-md-block">
 
-                        </li>
+
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
+                        <li class="mt-3">
+                             <img src="../../../images/admin/<?php echo $_SESSION['image'] ?>" alt="user" class="rounded-circle"
+                                    width="50" height="50"> 
+
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img src="../../../images/admin/<?php echo $_SESSION['image'] ?>" alt="user" class="rounded-circle"
-                                    width="50" height="50">
 
                                 <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
                                         class="text-dark"><?php echo $_SESSION['name'] ?></span> <i data-feather="chevron-down"
@@ -125,17 +124,6 @@
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
                                         class="svg-icon mr-2 ml-1"></i>
                                     <?php echo $_SESSION['email'] ?></a>
-                                <!--<a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Bala nce</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting</a>
-                                <div class="dropdown-divider"></div> -->
                                 <a href="logout.php" class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Logout</a>

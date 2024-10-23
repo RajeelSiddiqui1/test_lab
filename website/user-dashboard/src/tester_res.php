@@ -14,9 +14,9 @@ include("header.php");
 ?>
 <div class="main-panel">
           <div class="content-wrapper">
-           <div class="container">
+           <div class="container ">
             <div class="row">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped ">
             <thead class="table-dark">
               <tr>
                 <th>Product ID</th>
@@ -44,7 +44,9 @@ include("header.php");
                 <td><?php echo substr($row['message'],0,30).'...'?></td>
                 <td><img src="../../../images/products/<?php echo $row['product_image']?>" width="100" height="100" alt=""></td>
               <td><?php echo $row['status']?></td>
-              <td><a href="edit_tester_res.php?id=<?php echo $row['id']?>" class="btn" style="background-color: purple; color: white;">Edit</a></td>
+              <td><a href="edit_tester_res.php?id=<?php echo $row['id']?>" class="btn btn-warning" style="background-color: purple; color: white;">Edit</a>
+              <!-- <a href="" class="btn btn-danger">Delete</a> -->
+              </td>
              </tr>
              <?php }?>
             </tbody>
