@@ -183,91 +183,118 @@ include("header.php");
 
 
     <!-- Doctors Section -->
-    <section id="doctors" class="doctors section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Doctors</h2>
+    <section id="tester" class="doctors section">
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Tester's</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+    </div>
 
-      <div class="container">
+    
+    <!-- Area for search results -->
+    <div class="container" id="search-results">
+        <!-- Results will be dynamically loaded here via AJAX -->
+    </div>
 
+    <!-- List of testers -->
+    <div class="container mt-3">
         <div class="row gy-4">
+            <?php
+            $query = "
+                SELECT p.id, p.fullname, p.email, p.education, p.skills, p.work_experience, p.portfolio, p.country, p.image, c.c_name
+                FROM cpri_show_to_user p
+                INNER JOIN category c ON p.category_id = c.id
+                WHERE p.category_id = c.id;
+            ";
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Medical Officer</span>
-                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+            $result = mysqli_query($conn, $query);
+
+            while ($row = mysqli_fetch_assoc($result)) { ?>
+                <div class="col-lg-6 mt-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-member d-flex align-items-start">
+                        <div class="pic">
+                            <img src="../images/testers/<?php echo $row['image']; ?>" height="150" width="100%" alt="Tester Image">
+                        </div>
+                        <div class="member-info">
+                            <h4><?php echo $row['fullname']; ?></h4>
+                            <span><?php echo $row['email']; ?></span>
+                            <p><strong class="text-black">Education:</strong> <?php echo $row['education']; ?></p>
+                            <h6><strong class="text-black">Category:</strong> <?php echo $row['c_name']; ?></h6>
+                            <!-- Modal Trigger Button -->
+                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#testerModal"
+                                data-fullname="<?php echo $row['fullname']; ?>"
+                                data-email="<?php echo $row['email']; ?>"
+                                data-education="<?php echo $row['education']; ?>"
+                                data-skills="<?php echo $row['skills']; ?>"
+                                data-work_experience="<?php echo $row['work_experience']; ?>"
+                                data-portfolio="<?php echo $row['portfolio']; ?>"
+                                data-country="<?php echo $row['country']; ?>"
+                                data-image="<?php echo $row['image']; ?>">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-2.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Anesthesiologist</span>
-                <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-3.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cardiology</span>
-                <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-4.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Neurosurgeon</span>
-                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
+            <?php } ?>
         </div>
+    </div>
+</section>
 
-      </div>
+<!-- Modal Structure -->
+<div class="modal fade" id="testerModal" tabindex="-1" aria-labelledby="testerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="" id="testerImage" class="img-fluid" alt="Tester Image">
+                    </div>
+                    <div class="col-md-7 text-black">
+                        <h4 id="testerFullname" class="text-black"></h4>
+                        <p><strong class="text-black">Email:</strong> <span id="testerEmail"></span></p>
+                        <p><strong class="text-black">Education:</strong> <span id="testerEducation"></span></p>
+                        <p><strong class="text-black">Skills:</strong> <span id="testerSkills"></span></p>
+                        <p><strong class="text-black">Work Experience:</strong> <span id="testerWorkExperience"></span></p>
+                        <p><strong class="text-black">Portfolio:</strong> <a href="#" id="testerPortfolio" target="_blank">View Portfolio</a></p>
+                        <p><strong class="text-black">Country:</strong> <span id="testerCountry"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    </section><!-- /Doctors Section -->
+<!-- Script to handle the modal population -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var testerModal = document.getElementById('testerModal');
+    testerModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var fullname = button.getAttribute('data-fullname');
+        var email = button.getAttribute('data-email');
+        var education = button.getAttribute('data-education');
+        var skills = button.getAttribute('data-skills');
+        var workExperience = button.getAttribute('data-work_experience');
+        var portfolio = button.getAttribute('data-portfolio');
+        var country = button.getAttribute('data-country');
+        var image = button.getAttribute('data-image');
+
+        // Update modal content
+        document.getElementById('testerFullname').textContent = fullname;
+        document.getElementById('testerEmail').textContent = email;
+        document.getElementById('testerEducation').textContent = education;
+        document.getElementById('testerSkills').textContent = skills;
+        document.getElementById('testerWorkExperience').textContent = workExperience;
+        document.getElementById('testerPortfolio').setAttribute('href', portfolio);
+        document.getElementById('testerCountry').textContent = country;
+        document.getElementById('testerImage').setAttribute('src', '../images/testers/' + image);
+    });
+});
+
+</script>
 
     <!-- Faq Section -->
    

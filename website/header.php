@@ -41,27 +41,13 @@
 
   <header id="header" class="header sticky-top">
 
-    <div class="topbar d-flex align-items-center">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-        <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
-        </div>
-        <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-        </div>
-      </div>
-    </div><!-- End Top Bar -->
-
+    
     <div class="branding d-flex align-items-center">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="home.php" class="logo d-flex align-items-center me-auto">
          
-          <h1 style="color:#fff;">Medilab</h1>
+          <h3 style="color:#fff;" class="mt-4">SRS Electrical Lab</h3>
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -69,8 +55,8 @@
             <li><a href="home.php" class="active">Home<br></a></li>
             <li><a href="#about">About</a></li>
             <li><a href="service.php">Services</a></li>
-            <li><a href="#departments">Departments</a></li>
-            <li><a href="#doctors">Doctors</a></li>
+            <!-- <li><a href="#departments">Departments</a></li> -->
+            <li><a href="#tester">Tester</a></li>
             <li><a href="gallery.php">Gallery</a></li>
             <li><a href="contact.php">Conatct Us</a></li>
             <li class="dropdown "><a href="#"><span>Tester's</span> <i class="bi bi-chevron-down toggle-dropdown "></i></a>
